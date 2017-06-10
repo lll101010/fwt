@@ -28,7 +28,7 @@ public interface FileDao {
 	
 	public List<File> searchFileByPostId(int postId);
 	
-	public List<File> searchFileByTourId(int tourId);
+	public File searchFileByTourId(int tourId);
 	
 
 }

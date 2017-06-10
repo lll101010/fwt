@@ -9,17 +9,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script type="application/x-javascript">
 	
-	
-	
-	
-	
-	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
-
-
-
 
 </script>
 <!-- Owl-Carousel-CSS -->
@@ -614,53 +604,19 @@
 								tourApplyHtml += '<div class="blog-gridtext">';
 								tourApplyHtml += '<div class="blog-w3img">';
 								tourApplyHtml += '<a href="#myModal" data-toggle="modal">';
-								tourApplyHtml += '<img src="${ctx }/resource/images/g4.jpg class="img-responsive zoom-img" alt="" /></a>';
+								tourApplyHtml += '<img src="/img/' + tour.file.name + '" class="img-responsive zoom-img" alt="" /></a>';
 								tourApplyHtml += '</div>';
 								tourApplyHtml += '<div class="blog-w3imgtext">';
 								tourApplyHtml += '<br>';
-								tourApplyHtml += '<h4> <a href="#myModal" data-toggle="modal">' + tour.nameKor + '</a> </h4>';
+								tourApplyHtml += '<h4> <a href="#myModal" data-toggle="modal">' + tour.title + '</a> </h4>';
 								tourApplyHtml += '<p class="w3-agilep">';
-								tourApplyHtml += 'Posted By<a href="#">' + tour.guideId + '</a> &nbsp;&nbsp; ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
-								tourApplyHtml += '<p>' + tour.title + '</p>';
+								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
 								tourApplyHtml += '<a href="#" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a>';
 								tourApplyHtml += '</div> </div>';
 							});
 			$('#applyArea').empty();
 			$("#applyArea").append(tourApplyHtml);
 		};
-
-		// 		<div class="blog-gridtext">
-		// 		<div class="blog-w3img">
-		// 			<a href="#myModal" data-toggle="modal"><img src="${ctx }/resource/images/g4.jpg" class="img-responsive zoom-img" alt=""/></a>
-		// 		</div>
-		// 		<div class="blog-w3imgtext">
-		// 			<h4><a href="#myModal" data-toggle="modal">한강 </a></h4>
-		// 			<p class="w3-agilep">Posted By<a href="#"> 이근혁</a> &nbsp;&nbsp;2017-06-08 </p>
-		// 			<p>뭐이자식아</p>
-		// 			<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
-		// 		</div>
-		// 		</div>
-		// 		<c:forEach var="tour" items="${tours }">
-		// 		<div class="blog-gridtext">
-		// 			<div class="blog-w3img">
-		// 				<a href="#myModal" data-toggle="modal"><img
-// 					src="${ctx }/resource/images/g4.jpg"
-// 					class="img-responsive zoom-img" alt="" /></a>
-		// 			</div>
-		// 			<div class="blog-w3imgtext">
-		// 				<br>
-		// 				<h4>
-		// 					<a href="#myModal" data-toggle="modal">${tour.nameKor } </a>
-		// 				</h4>
-		// 				<p class="w3-agilep">
-		// 					Posted By<a href="#"> ${tour.guideId }</a> &nbsp;&nbsp;${tour.startDate } ~ ${tour.endDate }
-		// 				</p>
-		// 				<p>${tour.title }</p>
-		// 				<a href="#" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read
-		// 					more</a>
-		// 			</div>
-		// 		</div>
-		// 	</c:forEach>
 	</script>
 
 

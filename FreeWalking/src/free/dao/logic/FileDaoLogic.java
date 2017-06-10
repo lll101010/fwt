@@ -91,8 +91,8 @@ public class FileDaoLogic implements FileDao {
 	}
 
 	@Override
-	public List<File> searchFileByTourId(int tourId) {
-		return jdbcTemplate.query(SQL_SELECT_TOUR_FILE_ID, new Object[]{tourId}, FileDaoLogic::mappingTourFile);
+	public File searchFileByTourId(int tourId) {
+		return (File) jdbcTemplate.queryForObject(SQL_SELECT_TOUR_FILE_ID, new Object[]{tourId}, FileDaoLogic::mappingTourFile);
 	}
 
 	private static File mappingMemberFile(ResultSet rs, int rowNum) throws SQLException {

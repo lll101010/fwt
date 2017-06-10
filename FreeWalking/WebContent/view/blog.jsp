@@ -83,7 +83,7 @@
 				<div class="col-md-4 col-sm-6 blog-w3lgrids">
 					<div class="blog-gridtext">
 						<div class="blog-w3img">
-							<a href="#myModal" data-toggle="modal"><img src="${ctx }/resource/images/g4.jpg" class="img-responsive zoom-img" alt=""/></a>
+							<a href="#myModal" data-toggle="modal"><img src="/img/img_1.jpg" class="img-responsive zoom-img" alt=""/></a>
 						</div>
 						<div class="blog-w3imgtext">
 							<h4><a href="#myModal" data-toggle="modal">한강 </a></h4>

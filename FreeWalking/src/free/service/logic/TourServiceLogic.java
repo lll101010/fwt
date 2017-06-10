@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import free.dao.FileDao;
 import free.dao.TourDao;
+import free.domain.File;
 import free.domain.Place;
 import free.domain.Tour;
 import free.service.TourService;
@@ -63,6 +64,11 @@ public class TourServiceLogic implements TourService {
 	
 	@Override
 	public List<Tour> findTourByCondition(String firstDate, String lastDate, int people, int placeId) {
-		return dao.searchTourByCondition(firstDate, lastDate, people, placeId);
+		List<Tour> tours = dao.searchTourByCondition(firstDate, lastDate, people, placeId);
+		for(Tour t: tours) {
+			File f = fdao.searchFileByTourId(t.getId());
+			t.setFile(f);
+		}
+		return tours;
 	}
 }
