@@ -255,9 +255,8 @@
 	</div>
 	<!-- //banner-bottom -->
 
-	<div class="blog-agileinfo">
+	<div class="blog-agileinfo" id="applyArea">
 
-		<div class="col-md-4 col-sm-6 blog-w3lgrids" id=applyArea></div>
 
 		<div class="clearfix"></div>
 	</div>
@@ -600,7 +599,12 @@
 
 		var displayTourApply = function(resultData) {
 			var tourApplyHtml = "";
+			tourApplyHtml+= '<div id="blog" class="services blog">';
+			tourApplyHtml+= '<div class="container">';  
+			tourApplyHtml+= '<div class="blog-agileinfo">';
+			
 			$.each(resultData, function(index, tour) {
+								tourApplyHtml += '<div class="col-md-4 col-sm-6 blog-w3lgrids">';
 								tourApplyHtml += '<div class="blog-gridtext">';
 								tourApplyHtml += '<div class="blog-w3img">';
 								tourApplyHtml += '<a href="#myModal" data-toggle="modal">';
@@ -612,8 +616,9 @@
 								tourApplyHtml += '<p class="w3-agilep">';
 								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
 								tourApplyHtml += '<a href="#" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a>';
-								tourApplyHtml += '</div> </div>';
+								tourApplyHtml += '</div> </div> </div>';
 							});
+			tourApplyHtml+= '</div> </div> </div>';
 			$('#applyArea').empty();
 			$("#applyArea").append(tourApplyHtml);
 		};
