@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import free.domain.Tour;
+import free.domain.TourV2;
 
 public interface TourDao {
 	
@@ -23,7 +24,8 @@ public interface TourDao {
 	
 	public List<Tour> searchTourByMemberIdDate(String memberId, Date date);
 
-	public List<Tour> searchTourByCondition(String firstDate, String lastDate, int people, int placeId);
+	public List<TourV2> searchTourByCondition(String firstDate, String lastDate, int people, int placeId);
 	
 	public int getTourId();
+	
 }

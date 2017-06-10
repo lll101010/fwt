@@ -27,6 +27,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import free.domain.File;
 import free.domain.Place;
 import free.domain.Tour;
+import free.domain.TourV2;
 import free.service.PlaceService;
 import free.service.TourService;
 
@@ -88,7 +89,7 @@ public class TourController {
 	}
 	
 	@RequestMapping(value="findApply.ajax",method=RequestMethod.POST)
-	public @ResponseBody List<Tour> findApply(String people, Date firstDate, Date lastDate, int placeId) {
+	public @ResponseBody List<TourV2> findApply(String people, Date firstDate, Date lastDate, int placeId) {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar startCal = Calendar.getInstance();
@@ -100,11 +101,11 @@ public class TourController {
 		endCal.add(Calendar.HOUR, 24);
 		String endDay = formatter.format(endCal.getTime());
 		
-		List<Tour> tours = service.findTourByCondition(startDay, endDay, Integer.parseInt(people), placeId);
+		List<TourV2> tours = service.findTourByCondition(startDay, endDay, Integer.parseInt(people), placeId);
 		
 		
 		int i = 0;
-		for(Tour t : tours) {
+		for(TourV2 t : tours) {
 			String startTime = t.getStartDate().substring(0,16);
 			String endTime = t.getEndDate().substring(0,16);
 			tours.get(i).setStartDate(startTime);
@@ -112,6 +113,9 @@ public class TourController {
 			System.out.println(tours.get(i).toString());
 			i++;
 		}
+		
+		
+		
 		
 		return tours;
 	}

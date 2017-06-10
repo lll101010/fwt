@@ -5,6 +5,7 @@ import java.util.List;
 
 import free.domain.Place;
 import free.domain.Tour;
+import free.domain.TourV2;
 
 public interface TourService {
 	
@@ -24,6 +25,6 @@ public interface TourService {
 	
 	public List<Tour> findTourByMemberDate(String memberId, Date date);
 	
-	public List<Tour> findTourByCondition(String firstDate, String lastDate, int people, int placeId);
+	public List<TourV2> findTourByCondition(String firstDate, String lastDate, int people, int placeId);
 
 }

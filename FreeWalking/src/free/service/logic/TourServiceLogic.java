@@ -11,6 +11,7 @@ import free.dao.TourDao;
 import free.domain.File;
 import free.domain.Place;
 import free.domain.Tour;
+import free.domain.TourV2;
 import free.service.TourService;
 
 @Service
@@ -63,9 +64,9 @@ public class TourServiceLogic implements TourService {
 
 	
 	@Override
-	public List<Tour> findTourByCondition(String firstDate, String lastDate, int people, int placeId) {
-		List<Tour> tours = dao.searchTourByCondition(firstDate, lastDate, people, placeId);
-		for(Tour t: tours) {
+	public List<TourV2> findTourByCondition(String firstDate, String lastDate, int people, int placeId) {
+		List<TourV2> tours = dao.searchTourByCondition(firstDate, lastDate, people, placeId);
+		for(TourV2 t: tours) {
 			File f = fdao.searchFileByTourId(t.getId());
 			t.setFile(f);
 		}
