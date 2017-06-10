@@ -1,0 +1,130 @@
+
+drop table member_free;
+drop table tour_free;
+drop table member_tour_free;
+drop table place_free;
+drop table comment_free;
+drop table post_free;
+drop table member_file_free;
+drop table tour_file_free;
+drop table post_file_free;
+drop table message_free;
+drop table tour_report_free;
+drop table post_report_free;
+
+CREATE TABLE member_free (
+  id VARCHAR2(30) PRIMARY KEY,
+  password VARCHAR2(30) NULL,
+  name VARCHAR2(30) NULL,
+  gender VARCHAR2(5) NULL,
+  age VARCHAR2(30) NULL,
+  email VARCHAR2(40) NULL,
+  phone VARCHAR2(40) NULL
+);
+
+
+CREATE TABLE tour_free(
+  id NUMBER(20) PRIMARY KEY,
+  startDate DATE,
+  endDate DATE,
+  contents VARCHAR2(100),
+  maxPerson VARCHAR2(10),
+  language VARCHAR2(100),
+  status VARCHAR2(10),
+  placeId NUMBER,
+  guideId VARCHAR2(20)
+);
+
+
+CREATE TABLE member_tour_free (
+  memberId VARCHAR(30),
+  tourId NUMBER
+);
+
+CREATE TABLE place_free (
+  id NUMBER PRIMARY KEY,
+  name VARCHAR(30),
+  latitude NUMBER(10,7),
+  longitude NUMBER(10,7)
+);
+
+CREATE TABLE post_free (
+  id NUMBER PRIMARY KEY,
+  title VARCHAR(30),
+  contents VARCHAR(3000),
+  registDate DATE,
+  placeId NUMBER,
+  registerId VARCHAR(30)
+);
+
+CREATE TABLE comment_free(
+  id NUMBER PRIMARY KEY,
+  registDate DATE,
+  contents VARCHAR(1000),
+  postId NUMBER,
+  memberId VARCHAR(30)
+);
+
+CREATE TABLE member_file_free (
+  id NUMBER PRIMARY KEY,
+  type VARCHAR(50),
+  name VARCHAR(100),
+  memberId VARCHAR(30)
+);
+
+CREATE TABLE tour_file_free(
+  id NUMBER PRIMARY KEY,
+  type VARCHAR(50),
+  name VARCHAR(100),
+  tourId NUMBER
+);
+
+CREATE TABLE post_file_free (
+  id NUMBER PRIMARY KEY,
+  type VARCHAR(50),
+  name VARCHAR(100),
+  postId NUMBER
+);
+
+CREATE TABLE message_free (
+  id NUMBER PRIMARY KEY,
+  contents VARCHAR(3000),
+  registDate DATE,
+  fromMemberId VARCHAR(30),
+  toMemberId VARCHAR(30) 
+);
+
+CREATE TABLE tour_report_free (
+  id NUMBER PRIMARY KEY,
+  contents VARCHAR(3000),
+  tourId NUMBER,
+  memberId VARCHAR(30)
+);
+
+CREATE TABLE post_report_free(
+  id NUMBER PRIMARY KEY,
+  contents VARCHAR(3000),
+  postId NUMBER,
+  memberId VARCHAR(30)
+);
+
+create sequence tour_free_seq start with 1 increment by 1;
+create sequence place_free_seq start with 1 increment by 1;
+create sequence post_free_seq start with 1 increment by 1;
+create sequence comment_free_seq start with 1 increment by 1;
+create sequence member_file_free_seq start with 1 increment by 1;
+create sequence tour_file_free_seq start with 1 increment by 1;
+create sequence post_file_free_seq start with 1 increment by 1;
+create sequence message_free_seq start with 1 increment by 1;
+create sequence tour_report_free_seq start with 1 increment by 1;
+create sequence post_report_free_seq start with 1 increment by 1;
+
+ALTER TABLE place_free ADD (country VARCHAR2(20), address VARCHAR2(200), contents VARCHAR2(3000), city VARCHAR2(100), nameKor VARCHAR(40));
+ALTER TABLE tour_free ADD (title VARCHAR2(100));
+
+
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'hangang', 37.566386, 126.977948,  'KOREA', '서울특별시 영등포구 여의동로 330 한강사업본부 여의도안내센터', '한강공원입니다요', 'Seoul', '한강');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'GyeonbokPalace', 37.579838, 126.977041, 'KOREA', '서울특별시 종로구 종로1.2.3.4가동 사직로 161',  '경복궁이랍니다', 'Seoul', '경복궁');
+
+INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 06:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 08:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 10, 'rmsurll1@gmail.com');
+INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 18:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 20:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 1, 'rmsurll1@gmail.com');
