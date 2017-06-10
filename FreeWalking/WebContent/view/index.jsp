@@ -294,6 +294,9 @@
 		</div>
 	</div>
 	<!-- //modal-about -->
+	
+	
+	
 
 	<div class="modal bnr-modal fade" id="guideApplyModal" tabindex="-1"
 		role="dialog">
@@ -423,6 +426,22 @@
 					<!--<a href="https://accounts.google.com/o/oauth2/auth?client_id=1006094630241-2u32bu1k1komv4nepbmbbvrajogpvvj2.apps.googleusercontent.com&redirect_uri=http://localhost:8080/FreeWalking/oauth.do&scope=https://www.googleapis.com/auth/plus.login&response_type=code"><button type="button">Login with Google</button></a>  -->
 
 				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->
+	
+	<div class="modal bnr-modal fade" id="myTourModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+				</div> 
+				<div class="modal-body modal-spa">
+					<img src="" class="img-responsive" alt="" id="TourImg"/>
+					<h4>Blanditiis deleniti</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rutrum iaculis enim, non convallis felis mattis at. Donec fringilla lacus eu pretium rutrum. Cras aliquet congue ullamcorper. Etiam mattis eros eu ullamcorper volutpat. Proin ut dui a urna efficitur varius. uisque molestie cursus mi et congue consectetur adipiscing elit cras rutrum iaculis enim, Lorem ipsum dolor sit amet, non convallis felis mattis at. Maecenas sodales tortor ac ligula ultrices dictum et quis urna. Etiam pulvinar metus neque, eget porttitor massa vulputate in. Fusce lacus purus, pulvinar ut lacinia id, sagittis eu mi. Vestibulum eleifend massa sem, eget dapibus turpis efficitur at. Aliquam viverra quis leo et efficitur. Nullam arcu risus, scelerisque quis interdum eget, fermentum viverra turpis. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut At vero eos </p>
+				</div> 
 			</div>
 		</div>
 	</div>
@@ -604,18 +623,20 @@
 			tourApplyHtml+= '<div class="blog-agileinfo">';
 			
 			$.each(resultData, function(index, tour) {
+				detailImg = tour.file.name;
+				console.log(detailImg);
 								tourApplyHtml += '<div class="col-md-4 col-sm-6 blog-w3lgrids">';
 								tourApplyHtml += '<div class="blog-gridtext">';
 								tourApplyHtml += '<div class="blog-w3img">';
-								tourApplyHtml += '<a href="#myModal" data-toggle="modal">';
+								tourApplyHtml += '<a href="#myTourModal" data-toggle="modal">';
 								tourApplyHtml += '<img src="/img/' + tour.file.name + '" class="img-responsive zoom-img" alt="" /></a>';
 								tourApplyHtml += '</div>';
 								tourApplyHtml += '<div class="blog-w3imgtext">';
 								tourApplyHtml += '<br>';
-								tourApplyHtml += '<h4> <a href="#myModal" data-toggle="modal">' + tour.title + '</a> </h4>';
+								tourApplyHtml += '<h4>'  + tour.title + ' </h4>';
 								tourApplyHtml += '<p class="w3-agilep">';
 								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
-								tourApplyHtml += '<a href="#" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a>';
+								tourApplyHtml += '<a href="#myTourModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="TourImgShow()">Read more</a>';
 								tourApplyHtml += '</div> </div> </div>';
 							});
 			tourApplyHtml+= '</div> </div> </div>';
@@ -625,6 +646,14 @@
 	</script>
 
 
+	<script>
+		var TourImgShow = function(data){
+			var img= '/img/'+detailImg+'';
+			$('#TourImg').attr("src",img);
+		}
+	
+	
+	</script>
 
 
 	<script
