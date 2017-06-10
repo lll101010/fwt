@@ -1,14 +1,20 @@
 package free.dao.logic;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import free.dao.TourDao;
@@ -34,7 +40,7 @@ public class TourDaoLogic implements TourDao {
 														   + " AND startDate < TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss') "
 														   + " AND currentPerson + ? <= maxperson"
 														   + " AND placeId=?";
-	
+	private static final String SQL_SELECT_TOURID = "SELECT tour_free_seq.currval FROM dual";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -44,10 +50,46 @@ public class TourDaoLogic implements TourDao {
 	}
 
 	@Override
-	public boolean createTour(Tour tour) {
-		return jdbcTemplate.update(SQL_INSERT_TOUR, new Object[]{tour.getStartDate(), tour.getEndDate(), tour.getContents(), tour.getMaxPerson(), 
-				tour.getLanguage(), tour.getStatus(), tour.getPlaceId(), tour.getGuideId(), tour.getTitle()}) > 0;
+	public int getTourId() {
+		return (int)jdbcTemplate.queryForObject(SQL_SELECT_TOURID,Integer.class);
 	}
+	
+	@Override
+	public int createTour(Tour tour) {
+		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(SQL_INSERT_TOUR, new String[] { "id" });
+				ps.setString(1, tour.getStartDate());
+				ps.setString(2, tour.getEndDate());
+				ps.setString(3, tour.getContents());
+				ps.setInt(4, tour.getMaxPerson());
+				ps.setString(5, tour.getLanguage());
+				ps.setString(6, tour.getStatus());
+				ps.setInt(7, tour.getPlaceId());
+				ps.setString(8, tour.getGuideId());
+				ps.setString(9, tour.getTitle());
+
+				return ps;
+			}
+		}, keyHolder);
+		//
+		// jdbcTemplate.update(SQL_INSERT_TOUR, new
+		// Object[]{tour.getStartDate(), tour.getEndDate(), tour.getContents(),
+		// tour.getMaxPerson(),
+		// tour.getLanguage(), tour.getStatus(), tour.getPlaceId(),
+		// tour.getGuideId(), tour.getTitle()});
+		//
+		Number n = keyHolder.getKey();
+
+		return n.intValue();
+	}
+
+	
 
 	@Override
 	public boolean updateTour(Tour tour) {

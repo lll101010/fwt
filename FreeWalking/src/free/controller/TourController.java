@@ -36,6 +36,7 @@ public class TourController {
 	@Autowired
 	private TourService service;
 	
+	
 	@RequestMapping("tourApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
 		
@@ -56,7 +57,16 @@ public class TourController {
 		endCal.add(Calendar.HOUR, Integer.parseInt(multi.getParameter("time")) + 2);
 		String endDay = formatter.format(endCal.getTime());
 		
+		String type = multi.getContentType("image");
+		String imagename = multi.getFilesystemName("image");
+		
 		File file = new File();
+		
+		file.setName(imagename);
+		file.setType(type);
+		
+		System.out.println(imagename);
+		System.out.println(type);
 		
 		Tour tour = new Tour();
 		
@@ -69,6 +79,7 @@ public class TourController {
 		tour.setPlaceId(Integer.parseInt(multi.getParameter("placeId")));
 		tour.setStartDate(startDay);
 		tour.setEndDate(endDay);
+		tour.setFile(file);
 		
 		service.registerTour(tour);
 		
@@ -77,10 +88,10 @@ public class TourController {
 	
 	@RequestMapping(value="findApply.ajax",method=RequestMethod.POST)
 	public @ResponseBody List<Tour> findApply(String people, Date firstDate, Date lastDate, int placeId) {
-		System.out.println("��û�ο�" + people);
-		System.out.println("���۳� " +firstDate);
-		System.out.println("����" + lastDate);
-		System.out.println("�� ��ġ��" + placeId);
+		System.out.println("삐쁠" + people);
+		System.out.println("첫날짜 " +firstDate);
+		System.out.println("라스트날짜" + lastDate);
+		System.out.println("플레이스아이디" + placeId);
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar startCal = Calendar.getInstance();
@@ -94,7 +105,8 @@ public class TourController {
 		
 		List<Tour> tours = service.findTourByCondition(startDay, endDay, Integer.parseInt(people), placeId);
 		
-		System.out.println(tours.size());
+		System.out.println("투어사이즈"+tours.size());
+		
 		int i = 0;
 		for(Tour t : tours) {
 			String startTime = t.getStartDate().substring(0,16);
@@ -104,8 +116,6 @@ public class TourController {
 			System.out.println(tours.get(i).toString());
 			i++;
 		}
-		
-		
 		
 		return tours;
 	}

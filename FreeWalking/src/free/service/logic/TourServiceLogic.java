@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import free.dao.FileDao;
 import free.dao.TourDao;
 import free.domain.Place;
 import free.domain.Tour;
@@ -13,12 +14,15 @@ import free.service.TourService;
 
 @Service
 public class TourServiceLogic implements TourService {
+	
 	@Autowired
 	private TourDao dao;
+	@Autowired
+	private FileDao fdao;
 
 	@Override
 	public boolean registerTour(Tour tour) {
-		return dao.createTour(tour);
+		return fdao.createTourFile(tour.getFile(), dao.createTour(tour));
 	}
 
 	@Override

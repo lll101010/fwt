@@ -7,7 +7,7 @@ import free.domain.Tour;
 
 public interface TourDao {
 	
-	public boolean createTour(Tour tour);
+	public int createTour(Tour tour);
 	
 	public boolean updateTour(Tour tour);
 	
@@ -24,4 +24,6 @@ public interface TourDao {
 	public List<Tour> searchTourByMemberIdDate(String memberId, Date date);
 
 	public List<Tour> searchTourByCondition(String firstDate, String lastDate, int people, int placeId);
+	
+	public int getTourId();
 }

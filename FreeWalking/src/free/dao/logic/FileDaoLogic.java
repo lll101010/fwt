@@ -15,9 +15,9 @@ import free.domain.File;
 
 @Repository
 public class FileDaoLogic implements FileDao {
-	private static final String SQL_INSERT_MEMBER_FILE = "INSERT INTO member_file_free VALUES(member_file_seq.nextVal, ?, ?, ? )";
-	private static final String SQL_INSERT_TOUR_FILE = "INSERT INTO tour_file_free VALUES(tour_file_seq.nextVal, ?, ?, ? )";
-	private static final String SQL_INSERT_POST_FILE = "INSERT INTO post_file_free VALUES(post_file_seq.nextVal, ?, ?, ? )";
+	private static final String SQL_INSERT_MEMBER_FILE = "INSERT INTO member_file_free VALUES(member_file_free_seq.nextVal, ?, ?, ? )";
+	private static final String SQL_INSERT_TOUR_FILE = "INSERT INTO tour_file_free VALUES(tour_file_free_seq.nextVal, ?, ?, ? )";
+	private static final String SQL_INSERT_POST_FILE = "INSERT INTO post_file_free VALUES(post_file_free_seq.nextVal, ?, ?, ? )";
 	private static final String SQL_UPDATE_MEMBER_FILE = "UPDATE member_file_free SET type=?, name=? WHERE id = ?";
 	private static final String SQL_UPDATE_TOUR_FILE = "UPDATE tour_file_free SET type=?, name=? WHERE id = ?";
 	private static final String SQL_UPDATE_POST_FILE = "UPDATE post_file_free SET type=?, name=? WHERE id = ?";
