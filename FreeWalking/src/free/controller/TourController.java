@@ -65,6 +65,7 @@ public class TourController {
 		file.setName(imagename);
 		file.setType(type);
 		
+		
 		System.out.println(imagename);
 		System.out.println(type);
 		
