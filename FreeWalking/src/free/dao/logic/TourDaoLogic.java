@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import free.dao.TourDao;
 import free.domain.Tour;
+import free.domain.TourV2;
 
 @Repository
 public class TourDaoLogic implements TourDao {
@@ -41,6 +42,16 @@ public class TourDaoLogic implements TourDao {
 														 + " AND startDate < TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
 														 + " AND currentPerson + ? <= maxperson"
 														 + " AND placeId=?";
+	private static final String SQL_SELECT_TOURV2_CONDITION = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
+			 + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
+			 	   + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
+			 	   									 + " FROM member_tour_free"
+			 	   									 + " GROUP BY tourId) dual"
+			 	   									 + " ON t.id = dual.tourId)"
+			 + " WHERE startDate > TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
+			 + " AND startDate < TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
+			 + " AND currentPerson + ? <= maxperson"
+			 + " AND placeId=?";
 	private static final String SQL_SELECT_TOURID = "SELECT tour_free_seq.currval FROM dual";
 
 	private JdbcTemplate jdbcTemplate;
@@ -128,8 +139,8 @@ public class TourDaoLogic implements TourDao {
 	}
 	
 	@Override
-	public List<Tour> searchTourByCondition(String firstDate, String lastDate, int people, int placeId) {
-		return jdbcTemplate.query(SQL_SELECT_TOUR_CONDITION, new Object[]{firstDate, lastDate, people, placeId}, TourDaoLogic::mappingTour);
+	public List<TourV2> searchTourByCondition(String firstDate, String lastDate, int people, int placeId) {
+		return jdbcTemplate.query(SQL_SELECT_TOURV2_CONDITION, new Object[]{firstDate, lastDate, people, placeId}, TourDaoLogic::mappingTourV2);
 	}
 	
 	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
@@ -144,6 +155,21 @@ public class TourDaoLogic implements TourDao {
 		t.setPlaceId(rs.getInt("placeId"));
 		t.setGuideId(rs.getString("guideId"));
 		t.setTitle(rs.getString("title"));
+		return t;
+	}
+	public static TourV2 mappingTourV2(ResultSet rs, int rowNum) throws SQLException {
+		TourV2 t = new TourV2();
+		t.setId(rs.getInt("id"));
+		t.setStartDate(rs.getString("startDate"));
+		t.setEndDate(rs.getString("endDate"));
+		t.setContents(rs.getString("contents"));
+		t.setMaxPerson(rs.getInt("maxPerson"));
+		t.setLanguage(rs.getString("language"));
+		t.setStatus(rs.getString("status"));
+		t.setPlaceId(rs.getInt("placeId"));
+		t.setGuideId(rs.getString("guideId"));
+		t.setTitle(rs.getString("title"));
+		t.setCurrentPerson(rs.getInt("currentPerson"));
 		return t;
 	}
 

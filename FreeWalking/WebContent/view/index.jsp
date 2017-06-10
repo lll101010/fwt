@@ -635,7 +635,8 @@
 								tourApplyHtml += '<br>';
 								tourApplyHtml += '<h4>'  + tour.title + ' </h4>';
 								tourApplyHtml += '<p class="w3-agilep">';
-								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
+								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> Now Tourist/Max Tourist &nbsp;&nbsp; ' + tour.maxPerson + '/' + tour.currentPerson 
+								tourApplyHtml += '<br/> Date :  ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
 								tourApplyHtml += '<a href="#myTourModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="TourImgShow()">Read more</a>';
 								tourApplyHtml += '</div> </div> </div>';
 							});
