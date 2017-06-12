@@ -15,9 +15,12 @@
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
 <!-- Custom Theme files -->
+<!-- js -->
+<script src="${ctx }/resource/js/jquery-2.2.3.min.js"></script>
+<!-- //js -->
 <link href="${ctx }/resource/css/bootstrap.css" type="text/css" rel="stylesheet"
 	media="all">
-<link href="${ctx }/resource/css/style.css?ver=15" type="text/css" rel="stylesheet" media="all">
+<link href="${ctx }/resource/css/style.css?ver=19" type="text/css" rel="stylesheet" media="all">
 <link rel="stylesheet" href="${ctx }/resource/css/swipebox.css">
 <link rel="stylesheet" href="${ctx }/resource/css/flexslider.css" type="text/css"
 	media="screen" />
@@ -25,9 +28,7 @@
 <!-- font-awesome icons -->
 <link href="${ctx }/resource/css/font-awesome.css" rel="stylesheet">
 <!-- //font-awesome icons -->
-<!-- js -->
-<script src="${ctx }/resource/js/jquery-2.2.3.min.js"></script>
-<!-- //js -->
+
 <!-- web-fonts -->
 <link
 	href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200,300,400,700"
