@@ -32,16 +32,6 @@ public class TourDaoLogic implements TourDao {
 	private static final String SQL_SELECT_TOUR_DATE_PLACE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE startDate > ? AND startDate < ? + 1 AND placeId=?";
 	private static final String SQL_SELECT_ALL_TOUR = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free";
 	private static final String SQL_SELECT_TOUR_MEMBERID_DATE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE startDate > ? AND startDate < ? + 1 AND guideId=?";
-	private static final String SQL_SELECT_TOUR_CONDITION = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title" 
-														 + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
-														 	   + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
-														 	   									 + " FROM member_tour_free"
-														 	   									 + " GROUP BY tourId) dual"
-														 	   									 + " ON t.id = dual.tourId)"
-														 + " WHERE startDate > TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
-														 + " AND startDate < TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
-														 + " AND currentPerson + ? <= maxperson"
-														 + " AND placeId=?";
 	private static final String SQL_SELECT_TOURV2_CONDITION = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
 			 + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
 			 	   + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
@@ -51,8 +41,11 @@ public class TourDaoLogic implements TourDao {
 			 + " WHERE startDate > TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
 			 + " AND startDate < TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')"
 			 + " AND currentPerson + ? <= maxperson"
-			 + " AND placeId=?";
-	private static final String SQL_SELECT_TOURID = "SELECT tour_free_seq.currval FROM dual";
+			 + " AND placeId=?"
+			 + " AND startDate > sysdate "
+			 + " ORDER BY startDate";
+	private static final String SQL_SELECT_GUIDEID_STARTDATE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title FROM tour_free" 
+															+ " WHERE guideId=? AND startdate=TO_DATE(?,'yyyy-MM-dd hh24:mi:ss')";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -61,10 +54,6 @@ public class TourDaoLogic implements TourDao {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	@Override
-	public int getTourId() {
-		return (int)jdbcTemplate.queryForObject(SQL_SELECT_TOURID,Integer.class);
-	}
 	
 	@Override
 	public int createTour(Tour tour) {
@@ -142,6 +131,13 @@ public class TourDaoLogic implements TourDao {
 	public List<TourV2> searchTourByCondition(String firstDate, String lastDate, int people, int placeId) {
 		return jdbcTemplate.query(SQL_SELECT_TOURV2_CONDITION, new Object[]{firstDate, lastDate, people, placeId}, TourDaoLogic::mappingTourV2);
 	}
+	
+	@Override
+	public List<Tour> searchTourByGuideIdStartDate(String guideId, String startDate) {
+		return jdbcTemplate.query(SQL_SELECT_GUIDEID_STARTDATE, new Object[]{guideId, startDate}, TourDaoLogic::mappingTour);
+	}
+	
+	
 	
 	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
 		Tour t = new Tour();

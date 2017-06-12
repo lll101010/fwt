@@ -39,9 +39,8 @@ public class TourController {
 	@Autowired
 	private TourService service;
 	@Autowired
-
 	private MemberTourService mToService;
-
+	@Autowired
 	private PlaceService pService;
 
 	
@@ -86,7 +85,6 @@ public class TourController {
 		if(type == null || imagename == null) {
 			type = "image/jpeg";
 			imagename = pService.findPlaceByPlaceId(tour.getPlaceId()).getName() + ".jpg";
-			System.out.println(imagename);
 			file.setName(imagename);
 			file.setType(type);
 			tour.setFile(file);
@@ -149,17 +147,22 @@ public class TourController {
 	@RequestMapping(value="guideApplyCheck.ajax", method=RequestMethod.POST)
 	public @ResponseBody String guideApplyCheck(Date date, String time, String guideId) {
 		
-		System.out.println("���̵���̵�� : " + guideId);
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar Cal = Calendar.getInstance();
 		Cal.setTime(date);
 		Cal.add(Calendar.HOUR, Integer.parseInt(time));
-		String endDay = formatter.format(Cal.getTime());
+		String startDate = formatter.format(Cal.getTime());
 		
+		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 		
+		if(!t.isEmpty()) {
+			System.out.println("안에 뭐 들어있으니깐 False");
+			return "false";
+		} else {
+			System.out.println("There is no data");
+			return "true";
+		}
 		
-		return "false";
 	}
 
 	
