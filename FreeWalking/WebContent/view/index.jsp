@@ -604,7 +604,7 @@
 			var name = profile.getName();
 			var email = profile.getEmail();
 
-			document.getElementById("guideId").value = name;
+			document.getElementById("guideId").value = email;
 			document.getElementById("applyid").value = email;
 
 			console.log(name);

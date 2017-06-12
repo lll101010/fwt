@@ -3,8 +3,10 @@ package free.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import free.domain.Place;
+import free.domain.Tour;
 import free.service.PlaceService;
+import free.service.TourService;
 
 
 
@@ -25,6 +29,8 @@ public class PageController {
 
 	@Autowired
 	PlaceService placeService;
+	@Autowired
+	TourService tourService;
 	
 	@RequestMapping("index.do")
 	public String mainPage(int id, Model model){
@@ -97,6 +103,11 @@ public class PageController {
 	@RequestMapping("myPage.do")
 	public String myPage(String userId,Model model){
 		System.out.println(userId);
+		
+		List<Tour> list = tourService.findTourByMemberId(userId);
+		System.out.println(list.size());
+		model.addAttribute("guideList",list);
+		
 		return "myPage";
 	}
 	

@@ -33,30 +33,23 @@
 		<div class="container" style="background: bisque;">
 			<h3 class="w3title" style="padding-top: 1em;" >나의 가이드 목록</h3> 
 			<div class="news-wthreegrid"> 
-				<div class="news-grid-left">
-					<div class="col-md-3 col-xs-3 date">
-						<p>23</p>
-						<span>June</span>
+				<c:if test="${empty list}">
+					<p>가이드가 존재 하지 않아욥</p>
+				</c:if>
+					<c:forEach var="guide" items="${list}" varStatus="sts">
+					<div class="news-grid-left">
+						<div class="col-md-3 col-xs-3 date">
+							<p>23</p>
+							<span>June</span>
+						</div>
+						<div class="col-md-9 col-xs-9 date-info">
+							<h5><a href="#myModal" data-toggle="modal">${guide.title }</a></h5>
+							<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
+						</div>
+						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-9 col-xs-9 date-info">
-						<h5><a href="#myModal" data-toggle="modal">Fusce scelerisque sit amet justo vitae</a></h5>
-						<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
-						<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="news-grid-left">
-					<div class="col-md-3 col-xs-3 date">
-						<p>09</p>
-						<span>May</span>
-					</div>
-					<div class="col-md-9 col-xs-9 date-info">
-						<h5><a href="#myModal" data-toggle="modal">Fusce scelerisque sit amet justo vitae</a></h5>
-						<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
-						<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
-					</div>
-					<div class="clearfix"> </div>
-				</div>
+					</c:forEach>
 			</div>
 		</div>
 		<!-- //container -->
@@ -65,31 +58,25 @@
 		<div class="container" style="background: aquamarine; ">
 			<h3 class="w3title" style="padding-top: 1em;">나의 신청 목록</h3> 
 			<div class="news-wthreegrid"> 
-				<div class="news-grid-left">
-					<div class="col-md-3 col-xs-3 date">
-						<p>23</p>
-						<span>June</span>
+				<c:if test="${empty list}">
+					<p>가이드가 존재 하지 않아욥</p>
+				</c:if>
+					<c:forEach var="guide" items="${list}" varStatus="sts">
+					<div class="news-grid-left">
+						<div class="col-md-3 col-xs-3 date">
+							<p>23</p>
+							<span>June</span>
+						</div>
+						<div class="col-md-9 col-xs-9 date-info">
+							<h5><a href="#myModal" data-toggle="modal">${guide.title }</a></h5>
+							<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
+						</div>
+						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-9 col-xs-9 date-info">
-						<h5><a href="#myModal" data-toggle="modal">Fusce scelerisque sit amet justo vitae</a></h5>
-						<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
-						<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="news-grid-left">
-					<div class="col-md-3 col-xs-3 date">
-						<p>09</p>
-						<span>May</span>
-					</div>
-					<div class="col-md-9 col-xs-9 date-info">
-						<h5><a href="#myModal" data-toggle="modal">Fusce scelerisque sit amet justo vitae</a></h5>
-						<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
-						<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
-					</div>
-					<div class="clearfix"> </div>
-				</div>
+					</c:forEach>
 			</div>
+			
 		</div>
 		<!-- //container -->
 	</div>
@@ -141,7 +128,7 @@
 				var auth2 = gapi.auth2.getAuthInstance();
 				auth2.signOut().then(function() {
 					console.log('User signed out.');
-					$(location).attr('href', ${ctx}/);
+					$(location).attr('href', '${ctx}/');
 				});
 			});
 
