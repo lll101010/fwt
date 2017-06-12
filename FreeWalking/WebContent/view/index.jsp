@@ -808,6 +808,7 @@
 					$('#resultText').text('최대 인원 초과로 신청이 실패했습니다.');
 					jQuery('#myTourModal').modal('hide');
 				} else if (resultData == 'alreadyTour') {
+					
 					jQuery('#applyOk').modal();
 					$('#resultText').text('이미 신청하셨습니다.');
 					jQuery('#myTourModal').modal('hide');
