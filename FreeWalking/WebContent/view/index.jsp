@@ -310,7 +310,7 @@
 				</div>
 				<div id="loginF" class="modal-body modal-spa">
 					<div class="login-form">
-						<form action="tourApply.do" method="post"  enctype="multipart/form-data">
+						<form action="guideApply.do" method="post"  enctype="multipart/form-data">
 
 							<!-- 							타이틀 -->
 							<div class="form-group">
@@ -438,9 +438,26 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
 				</div> 
 				<div class="modal-body modal-spa">
-					<img src="" class="img-responsive" alt="" id="TourImg"/>
-					<h4>Blanditiis deleniti</h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rutrum iaculis enim, non convallis felis mattis at. Donec fringilla lacus eu pretium rutrum. Cras aliquet congue ullamcorper. Etiam mattis eros eu ullamcorper volutpat. Proin ut dui a urna efficitur varius. uisque molestie cursus mi et congue consectetur adipiscing elit cras rutrum iaculis enim, Lorem ipsum dolor sit amet, non convallis felis mattis at. Maecenas sodales tortor ac ligula ultrices dictum et quis urna. Etiam pulvinar metus neque, eget porttitor massa vulputate in. Fusce lacus purus, pulvinar ut lacinia id, sagittis eu mi. Vestibulum eleifend massa sem, eget dapibus turpis efficitur at. Aliquam viverra quis leo et efficitur. Nullam arcu risus, scelerisque quis interdum eget, fermentum viverra turpis. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut At vero eos </p>
+					<input type="hidden" value="" id="datailTid"> 
+					<input type="hidden" value="" id="applyid">
+					<img src="" class="img-responsive" alt="" id="tourImg"/>
+					<div style="display: flex;">
+					<h4 id="tourTitle"></h4><h5 id="tourGuide"></h5>
+					</div>
+					<p id="tourContent"></p>
+					<div class="person" style="text-align: center; margin:1em;">
+						<h3>Person</h3>
+						<div class="quantity">
+							<div class="quantity-select">
+								<div class="entry value-minus">&nbsp;</div>
+								<div class="entry value" id="pcnt">1</div>
+								<div class="entry value-plus active">&nbsp;</div>
+							</div>
+						</div>
+					</div>
+					<div style="text-align: center;">
+					<button type="button" class="btn btn-danger" onclick="tourApply()">신청</button>
+					</div>
 				</div> 
 			</div>
 		</div>
@@ -565,6 +582,7 @@
 			var email = profile.getEmail();
 
 			document.getElementById("guideId").value = name;
+			document.getElementById("applyid").value = email;
 
 			console.log(name);
 			console.log(email);
@@ -623,23 +641,21 @@
 			tourApplyHtml+= '<div class="blog-agileinfo">';
 			
 			$.each(resultData, function(index, tour) {
-				detailImg = tour.file.name;
-				console.log(detailImg);
-								tourApplyHtml += '<div class="col-md-4 col-sm-6 blog-w3lgrids">';
-								tourApplyHtml += '<div class="blog-gridtext">';
-								tourApplyHtml += '<div class="blog-w3img">';
-								tourApplyHtml += '<a href="#myTourModal" data-toggle="modal">';
-								tourApplyHtml += '<img src="/img/' + tour.file.name + '" class="img-responsive zoom-img" alt="" /></a>';
-								tourApplyHtml += '</div>';
-								tourApplyHtml += '<div class="blog-w3imgtext">';
-								tourApplyHtml += '<br>';
-								tourApplyHtml += '<h4>'  + tour.title + ' </h4>';
-								tourApplyHtml += '<p class="w3-agilep">';
-								tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> Now Tourist/Max Tourist &nbsp;&nbsp; ' + tour.maxPerson + '/' + tour.currentPerson 
-								tourApplyHtml += '<br/> Date :  ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
-								tourApplyHtml += '<a href="#myTourModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="TourImgShow()">Read more</a>';
-								tourApplyHtml += '</div> </div> </div>';
-							});
+				tourApplyHtml += '<div class="col-md-4 col-sm-6 blog-w3lgrids">';
+				tourApplyHtml += '<div class="blog-gridtext">';
+				tourApplyHtml += '<div class="blog-w3img">';
+				tourApplyHtml += '<a href="#" data-toggle="modal">';
+				tourApplyHtml += '<img src="/img/' + tour.file.name + '" class="img-responsive zoom-img" alt="" / ></a>';
+				tourApplyHtml += '</div>';
+				tourApplyHtml += '<div class="blog-w3imgtext">';
+				tourApplyHtml += '<br>';
+				tourApplyHtml += '<h4>'  + tour.title + ' </h4>';
+				tourApplyHtml += '<p class="w3-agilep">';
+				tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> Now Person/Max Person &nbsp;&nbsp; ' + tour.currentPerson + '/' + tour.maxPerson 
+				tourApplyHtml += '<br/> Date :  ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
+				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
+				tourApplyHtml += '</div> </div> </div>';
+			});
 			tourApplyHtml+= '</div> </div> </div>';
 			$('#applyArea').empty();
 			$("#applyArea").append(tourApplyHtml);
@@ -648,14 +664,63 @@
 
 
 	<script>
-		var TourImgShow = function(data){
-			var img= '/img/'+detailImg+'';
-			$('#TourImg').attr("src",img);
+		var TourImgShow = function(){
+			$('#myTourModal').on('show.bs.modal', function (event) {
+				var imgsrc = $(event.relatedTarget).data('imgsrc'); // Button that triggered the modal
+				// Extract info from data-* attributes
+				var tourtitle = $(event.relatedTarget).data('tourtitle');
+				var contents = $(event.relatedTarget).data('contents');
+				var guide = $(event.relatedTarget).data('guide');
+				var tid = $(event.relatedTarget).data('tid');
+				console.log(tid);
+			/*  $('#myTourModal').on('show.bs.modal', function(event) {           
+			        var seq = $(event.relatedTarget).data('id');
+			        console.log(seq);
+			    }); */
+			    $('#tourImg').attr('src',imgsrc);
+			    $('#tourTitle').text(tourtitle);
+			    $('#tourContent').text(contents);
+			    $('#tourGuide').text(guide);
+			    $('#AddPerson').text('1');
+			    $('#datailTid').val(tid);
+			});
+			
 		}
 	
 	
 	</script>
 
+	<!--quantity-->
+	<script>
+		$('.value-plus').on('click',function() {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(
+					divUpd.text(), 10) + 1;
+			divUpd.text(newVal);
+		});
+
+		$('.value-minus').on('click',function() {
+			var divUpd = $(this).parent().find('.value'), newVal = parseInt(
+					divUpd.text(), 10) - 1;
+			if (newVal >= 1)
+				divUpd.text(newVal);
+		});
+	</script>
+	<!--//quantity-->
+
+
+	<script>
+	var tourApply = function(){
+		var tid =  $('#datailTid').val();
+		var pcnt = $('#pcnt').text();
+		var applyId = $('#applyid').val();
+		console.log(tid);
+		console.log(pcnt);
+		var url="${ctx}/tourApply.do?tid="+tid+"&pcnt="+pcnt+"&aid="+applyId;
+		$(location).attr('href', url);
+	}
+	
+	
+	</script>
 
 	<script
 		src="https://apis.google.com/js/platform.js?onload=renderButton" async

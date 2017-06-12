@@ -59,12 +59,12 @@
 	<!-- Kick off Filterizr -->
 	<script src="${ctx }/resource/js/jquery.filterizr.js"></script>  
 	<script src="${ctx }/resource/js/controls.js"></script> 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(function() {
 			//Initialize filterizr with default options
 			$('.filtr-container').filterizr();
 		});
-	</script>	
+	</script> -->	
 	<!-- swipe box js -->
 	<script src="${ctx }/resource/js/jquery.swipebox.min.js"></script> 
 	<script type="text/javascript">

@@ -8,28 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<style>
-       #map {
-        height: 400px;
-        width: 100%;
-       }
-    </style>
-	<div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8GwqPAtoU0nfYXC8DymWiYPS22fO-dLA&callback=initMap">
-    </script>
+	<script type="text/javascript">
+function test(id){
+  id.setAttribute('class','on');//속성 : class 값으로 on 추가
+  alert(id);
+  return false;
+}
+</script>
+ 
+<a href="javascript:;" onclick="test(this);">dd</a> //이벤트객체 선택가능 그리고 a의 href값을 id로 넘겨준다.
+ <a href="javascript:test(this);">dd</a> //this값을 받아오지못함
+<p onclick="test(this);">dd</p>//이벤트객체 선택가능
 </body>
 </html>

@@ -25,9 +25,11 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import free.domain.File;
+import free.domain.MemberTour;
 import free.domain.Place;
 import free.domain.Tour;
 import free.domain.TourV2;
+import free.service.MemberTourService;
 import free.service.PlaceService;
 import free.service.TourService;
 
@@ -36,9 +38,11 @@ public class TourController {
 
 	@Autowired
 	private TourService service;
+	@Autowired
+	private MemberTourService mToService;
 	
 	
-	@RequestMapping("tourApply.do")
+	@RequestMapping("guideApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
 		
 		String imgPath = req.getServletContext().getInitParameter("imgPath");
@@ -116,12 +120,21 @@ public class TourController {
 			
 		}
 		
-		
-		
-		
 		return tours;
 	}
 	
+	
+	@RequestMapping("tourApply.do")
+	public String tourApply(String tid, String pcnt,String aid){
+		System.out.println(tid+","+pcnt+","+aid);
+		
+		MemberTour mt = new MemberTour();
+		mt.setTourId(Integer.parseInt(tid));
+		for(int i=0 ; i < Integer.parseInt(pcnt); i++){
+			mToService.registerMemberTour(aid, Integer.parseInt(tid));
+		}
+		return "";
+	}
 	
 	
 }
