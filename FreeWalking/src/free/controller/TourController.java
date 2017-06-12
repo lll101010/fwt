@@ -112,6 +112,8 @@ public class TourController {
 			tours.get(i).setEndDate(endTime);
 			System.out.println(tours.get(i).toString());
 			i++;
+			
+			
 		}
 		
 		
