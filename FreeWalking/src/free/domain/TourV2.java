@@ -113,6 +113,15 @@ public class TourV2 {
 	public void setCurrentPerson(int currentPerson) {
 		this.currentPerson = currentPerson;
 	}
+
+	@Override
+	public String toString() {
+		return "TourV2 [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", contents=" + contents
+				+ ", maxPerson=" + maxPerson + ", language=" + language + ", status=" + status + ", placeId=" + placeId
+				+ ", guideId=" + guideId + ", file=" + file + ", title=" + title + ", currentPerson=" + currentPerson
+				+ "]";
+	}
+	
 	
 	
 }

@@ -310,12 +310,13 @@
 				</div>
 				<div id="loginF" class="modal-body modal-spa">
 					<div class="login-form">
-						<form action="guideApply.do" method="post"  enctype="multipart/form-data">
+
+						<form action="guideApply.do" method="post" id="guideForm"  enctype="multipart/form-data">
 
 							<!-- 							타이틀 -->
 							<div class="form-group">
 								<label for="exampleInputPassword1">Title</label> <input
-									name="title" type="text" class="form-control"
+									name="title" type="text" id="applyTitle" class="form-control"
 									placeholder="Title">
 							</div>
 
@@ -325,10 +326,10 @@
 							<div class="form-group">
 								<label for="exampleInputPassword1">TourDate</label> <input
 									type="Date" name="date" class="form-control"
-									id="exampleInputPassword1" placeholder="contents">
+									id="applyDate" placeholder="contents">
 							</div>
 
-							<label>Time</label> <select class="form-control" name="time">
+							<label>Time</label> <select class="form-control" id=applyTime name="time" onchange="check()">
 								<option value="6">06:00 ~ 08:00</option>
 								<option value="7">07:00 ~ 09:00</option>
 								<option value="8">08:00 ~ 10:00</option>
@@ -347,11 +348,12 @@
 								<option value="21">21:00 ~ 23:00</option>
 								<option value="22">22:00 ~ 24:00</option>
 							</select> <br>
+							<span id="timeCheck"> </span>
 
 							<!-- 컨텐츠 -->
 							<div class="form-group">
 								<label for="exampleInputPassword1">contents</label> <input
-									name="contents" type="text" class="form-control"
+									name="contents" type="text" class="form-control" id="applyContents"
 									placeholder="contents">
 							</div>
 
@@ -402,7 +404,6 @@
 			</div>
 		</div>
 	</div>
-
 
 
 
@@ -488,8 +489,7 @@
 		function checkTime(i) {
 			if (i < 10) {
 				i = "0" + i
-			}
-			;
+			};
 			return i;
 		}
 	</script>
@@ -641,6 +641,7 @@
 			tourApplyHtml+= '<div class="blog-agileinfo">';
 			
 			$.each(resultData, function(index, tour) {
+
 				tourApplyHtml += '<div class="col-md-4 col-sm-6 blog-w3lgrids">';
 				tourApplyHtml += '<div class="blog-gridtext">';
 				tourApplyHtml += '<div class="blog-w3img">';
@@ -656,12 +657,55 @@
 				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
 				tourApplyHtml += '</div> </div> </div>';
 			});
+
 			tourApplyHtml+= '</div> </div> </div>';
 			$('#applyArea').empty();
 			$("#applyArea").append(tourApplyHtml);
 		};
 	</script>
 
+	<script type="text/javascript">
+	var timeFlag = true;
+	
+	function check() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/guideApplyCheck.ajax",
+			type : "post",
+			data : {
+				date : $("#applyDate").val(),
+				time : $("#applyTime").val(),
+				guideId : $("#guideId").val()
+			},
+			success : function(resultData) {
+				if(resultData == "false") {
+					$("#timeCheck").text("중복된 신청입니다.")
+					timeFlag = false;
+					return false;
+				}
+			}
+		});
+	}
+	
+	$('#guideForm').on('submit',function() {
+		console.log(timeFlag);
+		if($("#applyTitle").val() == "") {
+			alert("제목을 입력하시오.")
+			return false;
+		} else if ($("#applyContents").val() == "") {
+			alert("내용을 입력하시오.")
+			return false;
+		} else if (!timeFlag) {
+			alert("중복된 신청은 할 수 없습니다.")
+			return false;
+		}
+	
+	});
+	
+	
+	
+	
+	</script>
+	
 
 	<script>
 		var TourImgShow = function(){
