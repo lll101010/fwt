@@ -128,8 +128,6 @@ public class TourController {
 		
 		return tours;
 	}
-	
-	
 
 	@RequestMapping("tourApply.do")
 	public String tourApply(String tid, String pcnt,String aid){
