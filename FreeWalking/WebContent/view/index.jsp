@@ -440,10 +440,13 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
 				</div> 
 				<div class="modal-body modal-spa">
+
 					<form action="${ctx }/myPage.do" method="post" id="myPageform">
 						<input type="hidden" value="" id="datailTid"> 
-						<input type="hidden" value="" id="applyid" name="userId">
+						<input type="hidden" value="" id="applyId" name="userId">
+						<input type="hidden" value="" id="hiddenDate">
 					</form> 
+
 					<img src="" class="img-responsive" alt="" id="tourImg"/>
 					<div style="display: flex;">
 					<h4 id="tourTitle"></h4><h5 id="tourGuide"></h5>
@@ -481,7 +484,7 @@
 				<div id="loginF" class="modal-body modal-spa"
 					style="display: block; text-align: -webkit-center;">
 
-					<span id="loginText" style="color: blanchedalmond;">신청이 완료 되었습니다!!</span>
+					<span id="resultText" style="color: blanchedalmond;"></span>
 				</div>
 			</div>
 		</div>
@@ -604,10 +607,10 @@
 			var name = profile.getName();
 			var email = profile.getEmail();
 
-			document.getElementById("guideId").value = email;
-			document.getElementById("applyid").value = email;
-
-			console.log(name);
+ 			document.getElementById("guideId").value = email;
+			document.getElementById("applyId").value = email;
+			
+ 			console.log(name);
 			console.log(email);
 			console.log(imageurl);
 			
@@ -679,7 +682,7 @@
 				tourApplyHtml += '<p class="w3-agilep">';
 				tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> Now Person/Max Person &nbsp;&nbsp; ' + tour.currentPerson + '/' + tour.maxPerson 
 				tourApplyHtml += '<br/> Date :  ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
-				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
+				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-hdate='"+tour.startDate+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
 				tourApplyHtml += '</div> </div> </div>';
 			});
 
@@ -742,7 +745,9 @@
 				var contents = $(event.relatedTarget).data('contents');
 				var guide = $(event.relatedTarget).data('guide');
 				var tid = $(event.relatedTarget).data('tid');
+				var hDate = $(event.relatedTarget).data('hdate');
 				console.log(tid);
+				console.log(hDate);
 			/*  $('#myTourModal').on('show.bs.modal', function(event) {           
 			        var seq = $(event.relatedTarget).data('id');
 			        console.log(seq);
@@ -753,6 +758,7 @@
 			    $('#tourGuide').text(guide);
 			    $('#AddPerson').text('1');
 			    $('#datailTid').val(tid);
+			    $('#hiddenDate').val(hDate);
 			});
 			
 		}
@@ -782,16 +788,35 @@
 	var tourApply = function(){
 		var tid =  $('#datailTid').val();
 		var pcnt = $('#pcnt').text();
-		var applyId = $('#applyid').val();
-		var Gourl="${ctx}/tourApply.do?tid="+tid+"&pcnt="+pcnt+"&aid="+applyId;
+		var guideId = $('#guideId').val();
+		var hDate = $('#hiddenDate').val();
+		var Gourl="${ctx}/tourApply.do?tid="+tid+"&pcnt="+pcnt+"&aid="+guideId+"&hiddenDate="+hDate;
 		
 		$.ajax({
 			url : Gourl,
-			type : "get",
+			type : "post",
 			success : function(resultData) {
-				jQuery('#applyOk').modal();
-				jQuery('#myTourModal').modal('hide');
+
+				if(resultData == 'ok') {
+					jQuery('#applyOk').modal();
+					$('#resultText').text('신청이 완료되었습니다.');
+					jQuery('#myTourModal').modal('hide');
+				} else if (resultData == 'over') {
+					jQuery('#applyOk').modal();
+					$('#resultText').text('최대 인원 초과로 신청이 실패했습니다.');
+					jQuery('#myTourModal').modal('hide');
+				} else if (resultData == 'alreadyTour') {
+					
+					jQuery('#applyOk').modal();
+					$('#resultText').text('이미 신청하셨습니다.');
+					jQuery('#myTourModal').modal('hide');
+				} else if (resultData == 'alreadyGuide') {
+					jQuery('#applyOk').modal();
+					$('#resultText').text('그 시간대에 가이드 중입니다.');
+					jQuery('#myTourModal').modal('hide');
+				}
 				findApply();
+
 			}
 		});
 		

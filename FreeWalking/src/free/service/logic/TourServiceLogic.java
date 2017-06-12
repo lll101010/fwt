@@ -77,4 +77,9 @@ public class TourServiceLogic implements TourService {
 	public List<Tour> findTourByGuideIdStartdate(String guideId, String startDate) {
 		return dao.searchTourByGuideIdStartDate(guideId, startDate);
 	}
+	
+	@Override
+	public TourV2 findTourV2ByTourId(int id) {
+		return dao.searchTourV2ById(id);
+	}
 }

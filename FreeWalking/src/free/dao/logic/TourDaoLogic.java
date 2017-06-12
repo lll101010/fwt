@@ -44,6 +44,13 @@ public class TourDaoLogic implements TourDao {
 			 + " AND placeId=?"
 			 + " AND startDate > sysdate "
 			 + " ORDER BY startDate";
+	private static final String SQL_SELECT_TARGET_TOURV2 = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
+			 + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
+			 	   + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
+			 	   									 + " FROM member_tour_free"
+			 	   									 + " GROUP BY tourId) dual"
+			 	   									 + " ON t.id = dual.tourId)"
+			 + " WHERE id=?";
 	private static final String SQL_SELECT_GUIDEID_STARTDATE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title FROM tour_free" 
 															+ " WHERE guideId=? AND startdate=TO_DATE(?,'yyyy-MM-dd hh24:mi:ss')";
 
@@ -137,7 +144,10 @@ public class TourDaoLogic implements TourDao {
 		return jdbcTemplate.query(SQL_SELECT_GUIDEID_STARTDATE, new Object[]{guideId, startDate}, TourDaoLogic::mappingTour);
 	}
 	
-	
+	@Override
+	public TourV2 searchTourV2ById(int id) {
+		return (TourV2) jdbcTemplate.queryForObject(SQL_SELECT_TARGET_TOURV2, new Object[]{id}, TourDaoLogic::mappingTourV2);
+	}
 	
 	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
 		Tour t = new Tour();

@@ -36,14 +36,13 @@ public class TourController {
 	@Autowired
 	private PlaceService pService;
 
-	
 	@RequestMapping("guideApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
-		
+
 		String imgPath = req.getServletContext().getInitParameter("imgPath");
-		int sizeLimit = 1024*1024*10;
-		MultipartRequest multi = new MultipartRequest(req, imgPath, sizeLimit,"utf-8",new DefaultFileRenamePolicy());
-		
+		int sizeLimit = 1024 * 1024 * 10;
+		MultipartRequest multi = new MultipartRequest(req, imgPath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
+
 		String pdate = multi.getParameter("date");
 		Date date = Date.valueOf(pdate);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -51,19 +50,19 @@ public class TourController {
 		startCal.setTime(date);
 		startCal.add(Calendar.HOUR, Integer.parseInt(multi.getParameter("time")));
 		String startDay = formatter.format(startCal.getTime());
-		
+
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(date);
 		endCal.add(Calendar.HOUR, Integer.parseInt(multi.getParameter("time")) + 2);
 		String endDay = formatter.format(endCal.getTime());
-		
+
 		String type = multi.getContentType("image");
 		String imagename = multi.getFilesystemName("image");
-		
+
 		File file = new File();
-		
+
 		Tour tour = new Tour();
-		
+
 		tour.setTitle(multi.getParameter("title"));
 		tour.setContents(multi.getParameter("contents"));
 		tour.setGuideId(multi.getParameter("guideId"));
@@ -74,7 +73,7 @@ public class TourController {
 		tour.setStartDate(startDay);
 		tour.setEndDate(endDay);
 
-		if(type == null || imagename == null) {
+		if (type == null || imagename == null) {
 			type = "image/jpeg";
 			imagename = pService.findPlaceByPlaceId(tour.getPlaceId()).getName() + ".jpg";
 			file.setName(imagename);
@@ -86,74 +85,92 @@ public class TourController {
 			file.setType(type);
 			tour.setFile(file);
 		}
-		
+
 		service.registerTour(tour);
-		
+
 		return "redirect:/index.do?id=" + multi.getParameter("placeId");
 	}
-	
-	@RequestMapping(value="findApply.ajax",method=RequestMethod.POST)
+
+	@RequestMapping(value = "findApply.ajax", method = RequestMethod.POST)
 	public @ResponseBody List<TourV2> findApply(String people, Date firstDate, Date lastDate, int placeId) {
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(firstDate);
 		String startDay = formatter.format(startCal.getTime());
-		
+
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(lastDate);
 		endCal.add(Calendar.HOUR, 24);
 		String endDay = formatter.format(endCal.getTime());
-		
+
 		List<TourV2> tours = service.findTourByCondition(startDay, endDay, Integer.parseInt(people), placeId);
-		
+
 		int i = 0;
-		for(TourV2 t : tours) {
-			String startTime = t.getStartDate().substring(0,16);
-			String endTime = t.getEndDate().substring(0,16);
+		for (TourV2 t : tours) {
+			String startTime = t.getStartDate().substring(0, 16);
+			String endTime = t.getEndDate().substring(0, 16);
 			tours.get(i).setStartDate(startTime);
 			tours.get(i).setEndDate(endTime);
-			System.out.println(t.toString());
 			i++;
-			
-			
+
 		}
-		
+
 		return tours;
 	}
 
 	@RequestMapping("tourApply.do")
-	public @ResponseBody String tourApply(String tid, String pcnt,String aid){
-		System.out.println(tid+","+pcnt+","+aid);
-		
+	public @ResponseBody String tourApply(String tid, String pcnt, String aid, String hiddenDate) {
+		// tid = tourId & aid = memberId & pcnt = peopleCount
 		MemberTour mt = new MemberTour();
 		mt.setTourId(Integer.parseInt(tid));
-		for(int i=0 ; i < Integer.parseInt(pcnt); i++){
+		TourV2 t = service.findTourV2ByTourId(Integer.parseInt(tid));
+		int capacity = t.getCurrentPerson();
+		if (capacity + Integer.parseInt(pcnt) > t.getMaxPerson()) {
+			return "over";
+		}
+
+		boolean flag = mToService.findMemberTourByAll(aid, Integer.parseInt(tid));
+
+		// 비어있으면 트루
+		if (!flag) {
+			return "alreadyTour";
+		}
+
+		// 내가 그 시간대에 가이드가 있다면 안된다. 시간이랑 가이드 아이디 겹치면 안 되도록만들자
+		// aid가
+		System.out.println("aid : " + aid);
+		System.out.println("hiddenDate : " + hiddenDate);
+		
+		List<Tour> checkTours = service.findTourByGuideIdStartdate(aid, hiddenDate);
+		System.out.println("checkTours.size() : " + checkTours.size());
+		if (!checkTours.isEmpty()) {
+			return "alreadyGuide";
+		}
+
+		for (int i = 0; i < Integer.parseInt(pcnt); i++) {
 			mToService.registerMemberTour(aid, Integer.parseInt(tid));
 		}
 		return "ok";
 	}
 
-	@RequestMapping(value="guideApplyCheck.ajax", method=RequestMethod.POST)
+	@RequestMapping(value = "guideApplyCheck.ajax", method = RequestMethod.POST)
 	public @ResponseBody String guideApplyCheck(Date date, String time, String guideId) {
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar Cal = Calendar.getInstance();
 		Cal.setTime(date);
 		Cal.add(Calendar.HOUR, Integer.parseInt(time));
 		String startDate = formatter.format(Cal.getTime());
-		
+
 		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
-		
-		
-		if(!t.isEmpty()) {
+
+		if (!t.isEmpty()) {
 			return "false";
 		} else {
 			return "true";
 		}
-		
+
 	}
 
-	
-	
 }

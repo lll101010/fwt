@@ -29,4 +29,5 @@ public interface TourService {
 
 	public List<Tour> findTourByGuideIdStartdate(String guideId, String startDate);
 
+	public TourV2 findTourV2ByTourId(int id);
 }
