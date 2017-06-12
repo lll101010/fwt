@@ -145,6 +145,7 @@ public class TourController {
 		
 		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 		
+		
 		if(!t.isEmpty()) {
 			return "false";
 		} else {
