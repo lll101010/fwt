@@ -155,10 +155,8 @@ public class TourController {
 		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 		
 		if(!t.isEmpty()) {
-			System.out.println("안에 뭐 들어있으니깐 False");
 			return "false";
 		} else {
-			System.out.println("There is no data");
 			return "true";
 		}
 		
