@@ -36,9 +36,11 @@ public class TourController {
 
 	@Autowired
 	private TourService service;
+	@Autowired
+	private PlaceService pService;
 	
 	
-	@RequestMapping("tourApply.do")
+	@RequestMapping("guideApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
 		
 		String imgPath = req.getServletContext().getInitParameter("imgPath");
@@ -63,13 +65,6 @@ public class TourController {
 		
 		File file = new File();
 		
-		file.setName(imagename);
-		file.setType(type);
-		
-		
-		System.out.println(imagename);
-		System.out.println(type);
-		
 		Tour tour = new Tour();
 		
 		tour.setTitle(multi.getParameter("title"));
@@ -81,7 +76,20 @@ public class TourController {
 		tour.setPlaceId(Integer.parseInt(multi.getParameter("placeId")));
 		tour.setStartDate(startDay);
 		tour.setEndDate(endDay);
-		tour.setFile(file);
+
+		if(type == null || imagename == null) {
+			type = "image/jpeg";
+			imagename = pService.findPlaceByPlaceId(tour.getPlaceId()).getName() + ".jpg";
+			System.out.println(imagename);
+			file.setName(imagename);
+			file.setType(type);
+			tour.setFile(file);
+		} else {
+			file.setName(imagename);
+			System.out.println(imagename);
+			file.setType(type);
+			tour.setFile(file);
+		}
 		
 		service.registerTour(tour);
 		
@@ -103,21 +111,34 @@ public class TourController {
 		
 		List<TourV2> tours = service.findTourByCondition(startDay, endDay, Integer.parseInt(people), placeId);
 		
-		
 		int i = 0;
 		for(TourV2 t : tours) {
 			String startTime = t.getStartDate().substring(0,16);
 			String endTime = t.getEndDate().substring(0,16);
 			tours.get(i).setStartDate(startTime);
 			tours.get(i).setEndDate(endTime);
-			System.out.println(tours.get(i).toString());
+			System.out.println(t.toString());
 			i++;
 		}
 		
-		
-		
-		
 		return tours;
+	}
+	
+	
+	@RequestMapping(value="guideApplyCheck.ajax", method=RequestMethod.POST)
+	public @ResponseBody String guideApplyCheck(Date date, String time, String guideId) {
+		
+		System.out.println("가이드아이디는 : " + guideId);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+		Calendar Cal = Calendar.getInstance();
+		Cal.setTime(date);
+		Cal.add(Calendar.HOUR, Integer.parseInt(time));
+		String endDay = formatter.format(Cal.getTime());
+		
+		
+		
+		return "false";
 	}
 	
 	
