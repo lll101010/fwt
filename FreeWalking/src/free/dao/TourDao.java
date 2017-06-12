@@ -26,6 +26,5 @@ public interface TourDao {
 
 	public List<TourV2> searchTourByCondition(String firstDate, String lastDate, int people, int placeId);
 	
-	public int getTourId();
-	
+	public List<Tour> searchTourByGuideIdStartDate(String guideId, String startDate);
 }

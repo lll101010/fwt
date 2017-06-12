@@ -32,12 +32,10 @@ public class TourController {
 	@Autowired
 	private TourService service;
 	@Autowired
-
 	private MemberTourService mToService;
-
+	@Autowired
 	private PlaceService pService;
 
-	
 	
 	@RequestMapping("guideApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
@@ -79,7 +77,6 @@ public class TourController {
 		if(type == null || imagename == null) {
 			type = "image/jpeg";
 			imagename = pService.findPlaceByPlaceId(tour.getPlaceId()).getName() + ".jpg";
-			System.out.println(imagename);
 			file.setName(imagename);
 			file.setType(type);
 			tour.setFile(file);
@@ -124,8 +121,6 @@ public class TourController {
 		
 		return tours;
 	}
-	
-	
 
 	@RequestMapping("tourApply.do")
 	public @ResponseBody String tourApply(String tid, String pcnt,String aid){
@@ -142,16 +137,20 @@ public class TourController {
 	@RequestMapping(value="guideApplyCheck.ajax", method=RequestMethod.POST)
 	public @ResponseBody String guideApplyCheck(Date date, String time, String guideId) {
 		
-		System.out.println("���̵���̵�� : " + guideId);
-		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 		Calendar Cal = Calendar.getInstance();
 		Cal.setTime(date);
 		Cal.add(Calendar.HOUR, Integer.parseInt(time));
-		String endDay = formatter.format(Cal.getTime());
+		String startDate = formatter.format(Cal.getTime());
 		
+		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 		
-		return "false";
+		if(!t.isEmpty()) {
+			return "false";
+		} else {
+			return "true";
+		}
+		
 	}
 
 	
