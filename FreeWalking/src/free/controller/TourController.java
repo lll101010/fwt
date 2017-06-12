@@ -44,7 +44,6 @@ public class TourController {
 	private PlaceService pService;
 
 	
-	
 	@RequestMapping("guideApply.do")
 	public String guideApply(HttpServletRequest req) throws IOException {
 		
