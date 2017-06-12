@@ -33,17 +33,17 @@ public class PageController {
 		
 		try {
 			
-			String lon = p.getLongitude(); // À§µµ
-			String lat = p.getLatitude(); // °æµµ
+			String lon = p.getLongitude(); // ï¿½ï¿½ï¿½ï¿½
+			String lat = p.getLatitude(); // ï¿½æµµ
 			
-			// OpenAPI callÇÏ´Â URL
+			// OpenAPI callï¿½Ï´ï¿½ URL
 			String urlstr = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+"&lon="+lon+"&cnt=7&APPID=77cd9531534b700e5c09415c07036121";
 			URL url = new URL(urlstr);
 			BufferedReader bf;
 			String line;
 			String result = "";
 
-			// ³¯¾¾Á¤º¸
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			bf = new BufferedReader(new InputStreamReader(url.openStream()));
 
 			
@@ -56,7 +56,7 @@ public class PageController {
 			JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
 			JSONArray jsonArray = (JSONArray) jsonObj.get("list");
 
-//			System.out.println("¸®½ºÆ® °¹¼ö : " + jsonArray.size());
+//			System.out.println("ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ : " + jsonArray.size());
 
 			for (int i = 0; i < jsonArray.size(); i++) {
 
@@ -64,12 +64,12 @@ public class PageController {
 				JSONArray weatherArray = (JSONArray) jsObj.get("weather");
 				JSONObject obj = (JSONObject) weatherArray.get(0);
 				model.addAttribute("day"+i,getWeather(obj.get("main").toString()));
-//				System.out.println("³¯¾¾ : " + obj.get("main"));
+//				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + obj.get("main"));
 				
 				JSONObject tempObj = (JSONObject) jsObj.get("temp");
 				double temp = Double.parseDouble(tempObj.get("day").toString())-273.15;
 				model.addAttribute("temp"+i,(int)temp);
-//				System.out.printf("¿Âµµ : %.2f\n",temp);
+//				System.out.printf("ï¿½Âµï¿½ : %.2f\n",temp);
 				
 				Calendar cal = new GregorianCalendar();
 			    cal.add(Calendar.DATE, i);
@@ -92,6 +92,12 @@ public class PageController {
 		model.addAttribute("place", p);
 		
 		return "index";
+	}
+	
+	@RequestMapping("myPage.do")
+	public String myPage(String userId,Model model){
+		System.out.println(userId);
+		return "myPage";
 	}
 	
 	private String getWeather(String weather){

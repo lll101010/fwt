@@ -51,7 +51,7 @@
 				<li><a href="#portfolio" class="scroll"><span>Gallery</span></a></li>
 				<li><a href="#blog" class="scroll"><span>Board</span></a></li>
 				<li><a href="#services" class="loginS" style="display: none;"><span>Message</span></a></li>
-				<li><a href="#blog" class="loginS" style="display: none;"><span>MyTour</span></a></li>
+				<li><a href="#" onclick="myPage()" class="loginS" style="display: none;"><span>MyTour</span></a></li>
 			</ul>
 			<span aria-hidden="true" class="stretchy-nav-bg"></span>
 		</nav>
@@ -256,7 +256,7 @@
 	</div>
 	<!-- //banner-bottom -->
 
-	<div class="blog-agileinfo" id="applyArea">
+	<div class="blog-agileinfo" id="ContentArea">
 
 
 		<div class="clearfix"></div>
@@ -390,8 +390,7 @@
 							</select> <br>
 
 							<div class="form-group">
-							
-								<label for="exampleInputFile">파일 업로드 (미업로드시 해당 명소 기본 사진으로 저장)</label> <input
+								<label for="exampleInputFile">투어 파일 업로드</label> <input
 									type="file" name="image" id="exampleInputFile">
 							</div>
 
@@ -441,8 +440,10 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
 				</div> 
 				<div class="modal-body modal-spa">
-					<input type="hidden" value="" id="datailTid"> 
-					<input type="hidden" value="" id="applyid">
+					<form action="${ctx }/myPage.do" method="post" id="myPageform">
+						<input type="hidden" value="" id="datailTid"> 
+						<input type="hidden" value="" id="applyid" name="userId">
+					</form> 
 					<img src="" class="img-responsive" alt="" id="tourImg"/>
 					<div style="display: flex;">
 					<h4 id="tourTitle"></h4><h5 id="tourGuide"></h5>
@@ -642,7 +643,7 @@
 		}
 	</script>
 
-
+	<!-- 투어관련 ajax -->
 	<script>
 		var findApply = function() {
 			$.ajax({
@@ -683,10 +684,11 @@
 			});
 
 			tourApplyHtml+= '</div> </div> </div>';
-			$('#applyArea').empty();
-			$("#applyArea").append(tourApplyHtml);
+			$('#ContentArea').empty();
+			$("#ContentArea").append(tourApplyHtml);
 		};
 	</script>
+	<!-- 투어관련 -->
 
 	<script type="text/javascript">
 	var timeFlag = true;
@@ -705,10 +707,6 @@
 					$("#timeCheck").text("중복된 신청입니다.")
 					timeFlag = false;
 					return false;
-				} else {
-					$("#timeCheck").text("가이드 신청이 가능합니다.")
-					timeFlag = true;
-					return false;
 				}
 			}
 		});
@@ -725,9 +723,6 @@
 		} else if (!timeFlag) {
 			alert("중복된 신청은 할 수 없습니다.")
 			return false;
-		} else {
-			alert("가이드를 시작합니다.");
-			return true;
 		}
 	
 	});
@@ -796,15 +791,22 @@
 			success : function(resultData) {
 				jQuery('#applyOk').modal();
 				jQuery('#myTourModal').modal('hide');
-
+				findApply();
 			}
 		});
 		
 		
 	}
-	
-	
 	</script>
+	
+	<script>
+	var myPage = function(){
+		console.log("여기");
+		$('#myPageform').submit();
+		
+	}
+	</script>
+	
 
 	<script
 		src="https://apis.google.com/js/platform.js?onload=renderButton" async
