@@ -2,31 +2,24 @@ package free.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import free.domain.File;
 import free.domain.MemberTour;
-import free.domain.Place;
 import free.domain.Tour;
 import free.domain.TourV2;
 import free.service.MemberTourService;
@@ -135,7 +128,7 @@ public class TourController {
 	
 
 	@RequestMapping("tourApply.do")
-	public String tourApply(String tid, String pcnt,String aid){
+	public @ResponseBody String tourApply(String tid, String pcnt,String aid){
 		System.out.println(tid+","+pcnt+","+aid);
 		
 		MemberTour mt = new MemberTour();
@@ -143,7 +136,7 @@ public class TourController {
 		for(int i=0 ; i < Integer.parseInt(pcnt); i++){
 			mToService.registerMemberTour(aid, Integer.parseInt(tid));
 		}
-		return "";
+		return "ok";
 	}
 
 	@RequestMapping(value="guideApplyCheck.ajax", method=RequestMethod.POST)
@@ -156,7 +149,6 @@ public class TourController {
 		Cal.setTime(date);
 		Cal.add(Calendar.HOUR, Integer.parseInt(time));
 		String endDay = formatter.format(Cal.getTime());
-		
 		
 		
 		return "false";

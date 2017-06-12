@@ -32,9 +32,9 @@ img{max-width:100%;}
 body{
 	padding: 0;
     margin: 0;
-    background: url(../images/2.jpg) no-repeat 0px 0px;
+    background: url(../images/3.jpg) no-repeat 0px 0px;
     font-family: 'Roboto', sans-serif;
-    background-size: cover;
+    background-size: 100% 100%;
 	background-attachment: fixed;
 }
 
@@ -139,7 +139,7 @@ label{
     text-decoration: none;
     width: 50px;
     height: 50px;
-    background: transparent url(../images/arrows.png) no-repeat left top;
+    background: transparent url(../images/arrows1.png) no-repeat left top;
 }
 .callbacks_nav.next {
 	left: auto;
@@ -279,9 +279,10 @@ label{
 	margin:1em 0 0 0;
 }
 .pricing-top p span{
-    font-size: 4em;
+    font-size: 2.25em;
     font-weight: 600;
 }
+
 .pricing-bottom{
     background: #FFF;
     text-align: center;

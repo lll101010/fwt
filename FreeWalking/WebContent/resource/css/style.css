@@ -2177,3 +2177,27 @@ div#txt {
     margin-top: -6.2px;
     position: absolute;
 }
+
+.ApplyTour {
+    background: #b52e31;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    text-transform: capitalize;
+    border: 2px solid #b52e31;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    padding: 13px 0;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    font-family: 'Montserrat', sans-serif;
+}
+.ApplyTour:hover {
+	    background:transparent;
+}

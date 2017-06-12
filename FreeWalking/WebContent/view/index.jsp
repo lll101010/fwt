@@ -26,10 +26,11 @@
 		<!-- header -->
 		<div class="header">
 			<div class="container">
-				<div class="logo">
+				<div class="logo" style="display: flex">
 					<h1>
 						<a href="#">Free Walking Tour</a>
 					</h1>
+					<img src="" id="profileImg" style="max-height: 45px" class="img-circle">
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -44,7 +45,7 @@
 				aria-hidden="true"></span>
 			</a>
 			<ul>
-				<li><a href="${ctx }/view/home.jsp"><span>Home</span></a></li>
+				<li><a href="${ctx }/placelist.do"><span>Home</span></a></li>
 				<li><a href="#loginModal" data-toggle="modal"
 					style="content: '\f012';" id="loginNav"><span id="loginSpan">Login</span></a></li>
 				<li><a href="#portfolio" class="scroll"><span>Gallery</span></a></li>
@@ -457,9 +458,29 @@
 						</div>
 					</div>
 					<div style="text-align: center;">
-					<button type="button" class="btn btn-danger" onclick="tourApply()">신청</button>
+					<button type="button" class="ApplyTour" onclick="tourApply()">신청</button>
 					</div>
 				</div> 
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->
+	
+	<div class="modal bnr-modal fade" id="applyOk" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="background-color: indianred;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="loginF" class="modal-body modal-spa"
+					style="display: block; text-align: -webkit-center;">
+
+					<span id="loginText" style="color: blanchedalmond;">신청이 완료 되었습니다!!</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -587,6 +608,8 @@
 			console.log(name);
 			console.log(email);
 			console.log(imageurl);
+			
+			$('#profileImg').attr("src", imageurl)
 			$('.loginS').css("display", "block");
 			$('#gA').css("display", "inline-block");
 			$('#my-signin2').css("display", "none");
@@ -757,10 +780,19 @@
 		var tid =  $('#datailTid').val();
 		var pcnt = $('#pcnt').text();
 		var applyId = $('#applyid').val();
-		console.log(tid);
-		console.log(pcnt);
-		var url="${ctx}/tourApply.do?tid="+tid+"&pcnt="+pcnt+"&aid="+applyId;
-		$(location).attr('href', url);
+		var Gourl="${ctx}/tourApply.do?tid="+tid+"&pcnt="+pcnt+"&aid="+applyId;
+		
+		$.ajax({
+			url : Gourl,
+			type : "get",
+			success : function(resultData) {
+				jQuery('#applyOk').modal();
+				jQuery('#myTourModal').modal('hide');
+
+			}
+		});
+		
+		
 	}
 	
 	
