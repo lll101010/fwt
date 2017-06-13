@@ -31,7 +31,8 @@ public class MemberTourDaoLogic implements MemberTourDao {
 			 					   		 								   + " FROM member_tour_free"
 			 					   		 								   + " GROUP BY tourId) dual"
 			 					         + " ON t.id = dual.tourId) tv, member_tour_free mt"
-			 					         + " WHERE tv.id = mt.tourId AND mt.memberId=?";
+			 					         + " WHERE tv.id = mt.tourId AND mt.memberId=? "
+			 					         + " ORDER BY startDate";
 	
 	private JdbcTemplate jdbcTemplate;
 
