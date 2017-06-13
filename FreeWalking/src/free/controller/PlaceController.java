@@ -25,6 +25,7 @@ public class PlaceController {
 		
 		// 오늘 그 지역의 Tour의 갯수 받아오자
 		
+	
 		
 		return "home";
 	}
