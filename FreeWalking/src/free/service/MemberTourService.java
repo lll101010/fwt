@@ -4,6 +4,7 @@ import java.util.List;
 
 import free.domain.Member;
 import free.domain.Tour;
+import free.domain.TourV2;
 
 public interface MemberTourService {
 
@@ -13,7 +14,7 @@ public interface MemberTourService {
 	
 	public List<Member> findMemberByMemberTour(int tourId);
 	
-	public List<Tour> findTourByMemberTour(String memberId);
+	public List<TourV2> findTourByMemberTour(String memberId);
 	
 	public boolean findMemberTourByAll(String memberId, int tourId);
 }

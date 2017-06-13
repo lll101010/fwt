@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import free.dao.MemberTourDao;
 import free.domain.Member;
 import free.domain.Tour;
+import free.domain.TourV2;
 import free.service.MemberTourService;
 
 @Service
@@ -31,7 +32,7 @@ public class MemberTourServiceLogic implements MemberTourService{
 	}
 
 	@Override
-	public List<Tour> findTourByMemberTour(String memberId) {
+	public List<TourV2> findTourByMemberTour(String memberId) {
 		return dao.searchTourByMemberId(memberId);
 	}
 

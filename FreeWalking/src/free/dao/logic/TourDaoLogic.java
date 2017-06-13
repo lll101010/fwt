@@ -54,6 +54,8 @@ public class TourDaoLogic implements TourDao {
 	private static final String SQL_SELECT_GUIDEID_STARTDATE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title FROM tour_free" 
 															+ " WHERE guideId=? AND startdate=TO_DATE(?,'yyyy-MM-dd hh24:mi:ss')";
 
+	
+	
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired

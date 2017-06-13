@@ -4,6 +4,7 @@ import java.util.List;
 
 import free.domain.Member;
 import free.domain.Tour;
+import free.domain.TourV2;
 
 public interface MemberTourDao {
 	
@@ -11,7 +12,7 @@ public interface MemberTourDao {
 	
 	public boolean deleteMemberTour(String memberId, int tourId);
 	
-	public List<Tour> searchTourByMemberId(String memberId);
+	public List<TourV2> searchTourByMemberId(String memberId);
 	
 	public List<Member> searchMemberByTourId(int tourId);
 	

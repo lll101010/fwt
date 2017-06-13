@@ -14,15 +14,24 @@ import free.dao.MemberTourDao;
 import free.domain.Member;
 import free.domain.MemberTour;
 import free.domain.Tour;
+import free.domain.TourV2;
 
 @Repository
 public class MemberTourDaoLogic implements MemberTourDao {
 
 	private static final String SQL_INSERT_MEMBER_TOUR = "INSERT INTO member_tour_free VALUES(?, ?)";
 	private static final String SQL_DELETE_MEMBER_TOUR = "DELETE FROM member_tour_free WHERE memberId=? AND tourId=?";
-	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID = "SELECT id, startDate, endDate, contents, maxPerson, language, status, placeId, guideId From tour_free t, member_tour_free mt WHERE t.id=mt.tourId AND mt.memberId=?";
+//	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID = "SELECT id, startDate, endDate, contents, maxPerson, language, status, placeId, guideId From tour_free t, member_tour_free mt WHERE t.id=mt.tourId AND mt.memberId=?";
 	private static final String SQL_SELECT_MEMBERTOUR_TOURID = "SELECT id, password, name, gender, age, email, phone FROM member_free m, member_tour_free mt WHERE m.id = mt.memberId AND mt.tourId=?";
 	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID_TOURID = "SELECT * FROM member_tour_free WHERE memberId=? AND tourId=?";
+	
+	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID= "SELECT DISTINCT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
+			 					   + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
+			 					   		 + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
+			 					   		 								   + " FROM member_tour_free"
+			 					   		 								   + " GROUP BY tourId) dual"
+			 					         + " ON t.id = dual.tourId) tv, member_tour_free mt"
+			 					         + " WHERE tv.id = mt.tourId AND mt.memberId=?";
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -43,8 +52,8 @@ public class MemberTourDaoLogic implements MemberTourDao {
 	}
 
 	@Override
-	public List<Tour> searchTourByMemberId(String memberId) {
-		return jdbcTemplate.query(SQL_SELECT_MEMBERTOUR_MEMBERID, new Object[]{memberId}, MemberTourDaoLogic::mappingTour);
+	public List<TourV2> searchTourByMemberId(String memberId) {
+		return jdbcTemplate.query(SQL_SELECT_MEMBERTOUR_MEMBERID, new Object[]{memberId}, MemberTourDaoLogic::mappingTourV2);
 	}
 
 	@Override
@@ -68,7 +77,7 @@ public class MemberTourDaoLogic implements MemberTourDao {
 		m.setPhone(rs.getString("phone"));
 		return m;
 	}
-	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
+	private static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
 		Tour t = new Tour();
 		t.setId(rs.getInt("id"));
 		t.setStartDate(rs.getString("startDate"));
@@ -87,6 +96,22 @@ public class MemberTourDaoLogic implements MemberTourDao {
 		mt.setMemberId(rs.getString("memberId"));
 		mt.setTourId(rs.getInt("tourId"));
 		return mt;
+	}
+	
+	private static TourV2 mappingTourV2(ResultSet rs, int rowNum) throws SQLException {
+		TourV2 t = new TourV2();
+		t.setId(rs.getInt("id"));
+		t.setStartDate(rs.getString("startDate"));
+		t.setEndDate(rs.getString("endDate"));
+		t.setContents(rs.getString("contents"));
+		t.setMaxPerson(rs.getInt("maxPerson"));
+		t.setLanguage(rs.getString("language"));
+		t.setStatus(rs.getString("status"));
+		t.setPlaceId(rs.getInt("placeId"));
+		t.setGuideId(rs.getString("guideId"));
+		t.setTitle(rs.getString("title"));
+		t.setCurrentPerson(rs.getInt("currentPerson"));
+		return t;
 	}
 
 }

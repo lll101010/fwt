@@ -710,6 +710,10 @@
 					$("#timeCheck").text("중복된 신청입니다.")
 					timeFlag = false;
 					return false;
+				} else {
+					$("#timeCheck").text("가이드 신청이 가능합니다.")
+					timeFlag = true;
+					return false;
 				}
 			}
 		});
@@ -726,6 +730,9 @@
 		} else if (!timeFlag) {
 			alert("중복된 신청은 할 수 없습니다.")
 			return false;
+		} else {
+			alert("가이드를 시작합니다.");
+			return true;
 		}
 	
 	});
