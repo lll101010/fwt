@@ -53,7 +53,7 @@
 							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${guide.title }</a></h5>
 							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${guide.startDate } ~<br>End Date : ${guide.endDate }</p>
 							<p>Address <br>${guide.place.address }</p>
-							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="showRead(${guide})">Read more</a> 
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -106,7 +106,7 @@
 				</div> 
 				<div class="modal-body modal-spa">
 					<img src="images/bg2.jpg" class="img-responsive" alt=""/>
-					<h4>Blanditiis deleniti</h4>
+					<h4>${guide.title }</h4>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rutrum iaculis enim, non convallis felis mattis at. Donec fringilla lacus eu pretium rutrum. Cras aliquet congue ullamcorper. Etiam mattis eros eu ullamcorper volutpat. Proin ut dui a urna efficitur varius. uisque molestie cursus mi et congue consectetur adipiscing elit cras rutrum iaculis enim, Lorem ipsum dolor sit amet, non convallis felis mattis at. Maecenas sodales tortor ac ligula ultrices dictum et quis urna. Etiam pulvinar metus neque, eget porttitor massa vulputate in. Fusce lacus purus, pulvinar ut lacinia id, sagittis eu mi. Vestibulum eleifend massa sem, eget dapibus turpis efficitur at. Aliquam viverra quis leo et efficitur. Nullam arcu risus, scelerisque quis interdum eget, fermentum viverra turpis. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut At vero eos </p>
 				</div> 
 			</div>
@@ -188,6 +188,14 @@
 	  location.reload();
 		
 	}	
+	</script>
+	
+	<script>
+	var showRead = function(data){
+		
+	}
+	
+	
 	</script>
 
 <script
