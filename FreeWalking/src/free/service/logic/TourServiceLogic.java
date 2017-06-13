@@ -56,6 +56,8 @@ public class TourServiceLogic implements TourService {
 		
 		for(TourV2 t : tourList) {
 			t.setPlace(pdao.searchPlaceById(t.getPlaceId()));
+			File f = fdao.searchFileByTourId(t.getId());
+			t.setFile(f);
 		}
 		
 		return tourList;

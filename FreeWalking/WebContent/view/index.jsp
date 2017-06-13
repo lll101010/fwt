@@ -28,7 +28,7 @@
 			<div class="container">
 				<div class="logo" style="display: flex">
 					<h1>
-						<a href="#">Free Walking Tour</a>
+						<a href="#" style=" text-shadow: 0 0 2px #f00;">Free Walking Tour</a>
 					</h1>
 					<img src="" id="profileImg" style="max-height: 45px" class="img-circle">
 				</div>
@@ -198,9 +198,10 @@
 	<!-- banner-bottom -->
 	<div class="serach-w3agile">
 		<div class="container">
+			
 			<div class="place-grids">
 
-				<div class="col-md-2 col-xs-4 place-grid">
+				<div class="col-md-2 col-xs-4 place-grid" style="margin-left: 20%">
 					<h5>First Date</h5>
 					<input class="sel2" type="date" name="firstDate" id="firstDate"
 						name="firstDate">
@@ -236,7 +237,7 @@
 						<option value="20">20</option>
 					</select>
 				</div>
-				<div class="col-md-2 col-xs-4 place-grid">
+				<!-- <div class="col-md-2 col-xs-4 place-grid">
 					<h5>Use Language</h5>
 					<select class="sel" required="" name="language">
 						<option value="">Language</option>
@@ -246,7 +247,7 @@
 						<option value="Chinese">Chinese</option>
 						<option value="German">German</option>
 					</select>
-				</div>
+				</div> -->
 				<div class="col-md-2 col-xs-4 place-grid">
 					<button type="button" onclick="findApply()" class="sbBtn">search</button>
 				</div>
@@ -284,7 +285,7 @@
 						class="map">
 						<iframe
 							src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${place.nameKor }" allowfullscreen">
+   								 &q=${place.address }" allowfullscreen">
 						</iframe>
 					</div>
 
@@ -349,7 +350,7 @@
 								<option value="21">21:00 ~ 23:00</option>
 								<option value="22">22:00 ~ 24:00</option>
 							</select> <br>
-							<span id="timeCheck"> </span>
+							<span id="timeCheck" style="color: crimson;"> </span>
 
 							<!-- 컨텐츠 -->
 							<div class="form-group">
