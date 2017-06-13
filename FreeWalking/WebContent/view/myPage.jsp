@@ -121,6 +121,32 @@
 	</div>
 	<!-- //news -->
 	
+	
+	<!-- login modal-about -->
+	<div class="modal bnr-modal fade" id="loginModal" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="background-color: currentColor;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="loginF" class="modal-body modal-spa"
+					style="display: block; text-align: -webkit-center;">
+
+					<span id="loginText" style="color: blanchedalmond;">구글 아이디로
+						이용하셈</span>
+					<div id="my-signin2"></div>
+					<!--<a href="https://accounts.google.com/o/oauth2/auth?client_id=1006094630241-2u32bu1k1komv4nepbmbbvrajogpvvj2.apps.googleusercontent.com&redirect_uri=http://localhost:8080/FreeWalking/oauth.do&scope=https://www.googleapis.com/auth/plus.login&response_type=code"><button type="button">Login with Google</button></a>  -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 	<div class="modal bnr-modal fade" id="myModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -136,7 +162,6 @@
 		</div>
 	</div>
 	<!-- //modal-about -->  
-	
 	
 	<!-- modal-about -->
 	<div class="modal bnr-modal fade" id="mapModal" tabindex="-1"

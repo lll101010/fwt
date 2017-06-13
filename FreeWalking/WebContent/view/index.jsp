@@ -350,7 +350,7 @@
 								<option value="21">21:00 ~ 23:00</option>
 								<option value="22">22:00 ~ 24:00</option>
 							</select> <br>
-							<span id="timeCheck"> </span>
+							<span id="timeCheck" style="color: crimson;"> </span>
 
 							<!-- 컨텐츠 -->
 							<div class="form-group">
