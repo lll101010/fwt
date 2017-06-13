@@ -20,7 +20,7 @@
 <!-- //js -->
 <link href="${ctx }/resource/css/bootstrap.css" type="text/css" rel="stylesheet"
 	media="all">
-<link href="${ctx }/resource/css/style.css?ver=24" type="text/css" rel="stylesheet" media="all">
+<link href="${ctx }/resource/css/style.css?ver=26" type="text/css" rel="stylesheet" media="all">
 <link rel="stylesheet" href="${ctx }/resource/css/swipebox.css">
 <link rel="stylesheet" href="${ctx }/resource/css/flexslider.css" type="text/css"
 	media="screen" />

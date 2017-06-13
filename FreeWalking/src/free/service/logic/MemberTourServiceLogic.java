@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import free.dao.FileDao;
 import free.dao.MemberTourDao;
 import free.dao.PlaceDao;
+import free.domain.File;
 import free.domain.Member;
 import free.domain.TourV2;
 import free.service.MemberTourService;
@@ -17,6 +19,8 @@ public class MemberTourServiceLogic implements MemberTourService{
 	private MemberTourDao dao;
 	@Autowired
 	private PlaceDao pdao;
+	@Autowired
+	private FileDao fdao;
 	
 	@Override
 	public boolean registerMemberTour(String memberId, int tourId) {
@@ -39,6 +43,8 @@ public class MemberTourServiceLogic implements MemberTourService{
 		List<TourV2> list = dao.searchTourByMemberId(memberId);
 		for(TourV2 t : list ){
 			t.setPlace(pdao.searchPlaceById(t.getPlaceId()));
+			File f = fdao.searchFileByTourId(t.getId());
+			t.setFile(f);
 		}
 		
 		return list; 

@@ -28,7 +28,7 @@
 		</nav>
 
 	<!-- news -->
-	<div class="news" id="news" style="background: url(${ctx}/resource/images/badpark.jpg)no-repeat 0px 0px; background-size: 100% 100%;">
+	<div class="news" id="news" style="background: url(${ctx}/resource/images/badpark.jpg) no-repeat 0px 0px; opacity: 0.8; background-size: 100% 100%;  ">
 		<!-- container -->
 		<div class="container" style="background: azure; opacity: 0.93">
 			<h3 class="w3title" style="padding-top: 1em;" >My Guide List</h3> 
@@ -37,6 +37,7 @@
 					<p class="noList">No Guide List</p>
 				</c:if>
 					<c:forEach var="guide" items="${guideList}" varStatus="sts">
+					<c:set var="count" value="${count+1}" />
 					<div class="news-grid-left">
 						<div class="col-md-3 col-xs-3 date">
 							<p>
@@ -53,7 +54,19 @@
 							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${guide.title }</a></h5>
 							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${guide.startDate } ~<br>End Date : ${guide.endDate }</p>
 							<p>Address <br>${guide.place.address }</p>
-							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="showRead(${guide})">Read more</a> 
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" 
+							data-mtitle="${guide.title}" 
+							data-mcontents="${guide.contents }"
+							data-mimgsrc="/img/${guide.file.name }"
+							onclick="showRead()"
+							
+							>Read more</a>
+							<a href="#mapModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
+							data-pcontents="${guide.place.contents }"
+							data-paddress="${guide.place.address }"
+							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
+   								 &q=${guide.place.nameKor }"
+							onclick="showMap()">Location</a> 
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -86,7 +99,17 @@
 							<h5><a href="#myModal" data-toggle="modal">Guide ID : ${tour.guideId }</a></h5>
 							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${tour.startDate } ~<br>End Date : ${tour.endDate }</p>
 							<p>Address  <br>${tour.place.address }</p>
-							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
+							data-mtitle="${tour.title}" 
+							data-mcontents="${tour.contents }"
+							data-mimgsrc="/img/${tour.file.name }"
+							onclick="showRead()">Read more</a> 
+							<a href="#mapModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
+							data-pcontents="${guide.place.contents }"
+							data-paddress="${guide.place.address }"
+							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
+   								 &q=${tour.place.nameKor }"
+							onclick="showMap()">Location</a>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -105,9 +128,9 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
 				</div> 
 				<div class="modal-body modal-spa">
-					<img src="images/bg2.jpg" class="img-responsive" alt=""/>
-					<h4>${guide.title }</h4>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rutrum iaculis enim, non convallis felis mattis at. Donec fringilla lacus eu pretium rutrum. Cras aliquet congue ullamcorper. Etiam mattis eros eu ullamcorper volutpat. Proin ut dui a urna efficitur varius. uisque molestie cursus mi et congue consectetur adipiscing elit cras rutrum iaculis enim, Lorem ipsum dolor sit amet, non convallis felis mattis at. Maecenas sodales tortor ac ligula ultrices dictum et quis urna. Etiam pulvinar metus neque, eget porttitor massa vulputate in. Fusce lacus purus, pulvinar ut lacinia id, sagittis eu mi. Vestibulum eleifend massa sem, eget dapibus turpis efficitur at. Aliquam viverra quis leo et efficitur. Nullam arcu risus, scelerisque quis interdum eget, fermentum viverra turpis. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut At vero eos </p>
+					<img src="" class="img-responsive" alt=""/ id="ModalImg">
+					<h4 id="ModalTitle"></h4>
+					<p id="ModalContents"></p>
 				</div> 
 			</div>
 		</div>
@@ -115,25 +138,25 @@
 	<!-- //modal-about -->  
 	
 	
-	<!-- login modal-about -->
-	<div class="modal bnr-modal fade" id="loginModal" tabindex="-1"
+	<!-- modal-about -->
+	<div class="modal bnr-modal fade" id="mapModal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content" style="background-color: currentColor;">
+			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div id="loginF" class="modal-body modal-spa"
-					style="display: block; text-align: -webkit-center;">
-
-					<span id="loginText" style="color: blanchedalmond;">구글 아이디로
-						이용하셈</span>
-					<div id="my-signin2"></div>
-					<!--<a href="https://accounts.google.com/o/oauth2/auth?client_id=1006094630241-2u32bu1k1komv4nepbmbbvrajogpvvj2.apps.googleusercontent.com&redirect_uri=http://localhost:8080/FreeWalking/oauth.do&scope=https://www.googleapis.com/auth/plus.login&response_type=code"><button type="button">Login with Google</button></a>  -->
-
+				<div class="modal-body modal-spa">
+					<div class="map">
+						<iframe
+							src="" id="mplacesrc">
+						</iframe>
+					</div>
+					<h4 id="mplacecontents"></h4>
+					<p id="mplaceaddress"></p>
 				</div>
 			</div>
 		</div>
@@ -191,8 +214,26 @@
 	</script>
 	
 	<script>
-	var showRead = function(data){
-		
+	var showRead = function(){
+			$('#myModal').on('show.bs.modal', function (event) {
+				var mimgsrc = $(event.relatedTarget).data('mimgsrc'); // Button that triggered the modal
+				var modaltitle = $(event.relatedTarget).data('mtitle'); // Button that triggered the modal
+				var modalcontents = $(event.relatedTarget).data('mcontents'); 
+			 	$('#ModalTitle').text(modaltitle);
+			 	$('#ModalContents').text(modalcontents);
+			    $('#ModalImg').attr('src', mimgsrc);
+				console.log(modaltitle);
+			});
+	}
+	var showMap = function(){
+		$('#mapModal').on('show.bs.modal', function (event) {
+			var mapsrc = $(event.relatedTarget).data('psrc'); // Button that triggered the modal
+			var mapaddress = $(event.relatedTarget).data('paddress'); // Button that triggered the modal
+			var mapcontents = $(event.relatedTarget).data('pcontents'); 
+		 	$('#mplacecontents').text(mapcontents);
+		 	$('#mplaceaddress').text(mapaddress);
+		    $('#mplacesrc').attr('src', mapsrc);
+		});
 	}
 	
 	
