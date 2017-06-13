@@ -28,23 +28,23 @@
 		</nav>
 
 	<!-- news -->
-	<div class="news" id="news" style="background: lightcoral">
+	<div class="news" id="news" style="background: lavender">
 		<!-- container -->
 		<div class="container" style="background: bisque;">
-			<h3 class="w3title" style="padding-top: 1em;" >나의 가이드 목록</h3> 
-			<div class="news-wthreegrid"> 
-				<c:if test="${empty list}">
-					<p>가이드가 존재 하지 않아욥</p>
+			<h3 class="w3title" style="padding-top: 1em;" >My Guide List</h3> 
+			<div class="news-wthreegrid" style="text-align: center;"> 
+				<c:if test="${empty guideList}">
+					<p class="noList">No Guide List</p>
 				</c:if>
-					<c:forEach var="guide" items="${list}" varStatus="sts">
+					<c:forEach var="guide" items="${guideList}" varStatus="sts">
 					<div class="news-grid-left">
 						<div class="col-md-3 col-xs-3 date">
 							<p>23</p>
-							<span>June</span>
+							<span>${guide.startDate }</span>
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
 							<h5><a href="#myModal" data-toggle="modal">${guide.title }</a></h5>
-							<p>Proin euismod vehicula vestibulum. Fusce ullamcorper aliquet dolor id egestas. Nulla leo purus, facilisis non cursus ut, egestas sed ipsum.</p>
+							<p>${guide.contents }</p>
 							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
 						</div>
 						<div class="clearfix"> </div>
@@ -55,11 +55,11 @@
 		<!-- //container -->
 		
 		<!-- container -->
-		<div class="container" style="background: aquamarine; ">
-			<h3 class="w3title" style="padding-top: 1em;">나의 신청 목록</h3> 
-			<div class="news-wthreegrid"> 
+		<div class="container" style="background: bisque; border-top:1.1px solid #f44336;">
+			<h3 class="w3title" style="padding-top: 1em;">My Tour List</h3> 
+			<div class="news-wthreegrid" style="text-align: center;"> 
 				<c:if test="${empty list}">
-					<p>가이드가 존재 하지 않아욥</p>
+					<p class="noList">No Tour List</p>
 				</c:if>
 					<c:forEach var="guide" items="${list}" varStatus="sts">
 					<div class="news-grid-left">

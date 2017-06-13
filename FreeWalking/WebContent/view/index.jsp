@@ -22,7 +22,7 @@
 
 <body onload="startTime()">
 	<!-- banner -->
-	<div id="home" class="w3ls-banner">
+	<div id="home" class="w3ls-banner" style="background: url(/img/hangang.jpg)no-repeat 0px 0px; background-size: 100% 100%">
 		<!-- header -->
 		<div class="header">
 			<div class="container">
