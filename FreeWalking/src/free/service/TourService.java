@@ -30,4 +30,8 @@ public interface TourService {
 	public List<Tour> findTourByGuideIdStartdate(String guideId, String startDate);
 
 	public TourV2 findTourV2ByTourId(int id);
+	
+	public List<TourV2> findTourByToday(int placeId);
+	
+	public List<Tour> findAllTourByPlaceId(int placeId);
 }

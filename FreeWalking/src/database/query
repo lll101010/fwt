@@ -123,8 +123,12 @@ ALTER TABLE place_free ADD (country VARCHAR2(20), address VARCHAR2(200), content
 ALTER TABLE tour_free ADD (title VARCHAR2(100));
 
 
-INSERT INTO place_free VALUES(place_free_seq.nextVal, 'hangang', 37.566386, 126.977948,  'KOREA', '서울특별시 영등포구 여의동로 330 한강사업본부 여의도안내센터', '한강공원입니다요', 'Seoul', '한강');
-INSERT INTO place_free VALUES(place_free_seq.nextVal, 'GyeonbokPalace', 37.579838, 126.977041, 'KOREA', '서울특별시 종로구 종로1.2.3.4가동 사직로 161',  '경복궁이랍니다', 'Seoul', '경복궁');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'Banpo Hangang park', 37.566386, 126.977948,  'KOREA', '서울특별시 영등포구 여의동로 330 한강사업본부 여의도안내센터', '낭만달빛마켓이 있는 반포한강공원', 'Seoul', '한강');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'Gyeongbok palace', 37.579838, 126.977041, 'KOREA', '서울특별시 종로구 종로1.2.3.4가동 사직로 161',  '운치있는 야간개장과 종묘가 있는 경복궁', 'Seoul', '경복궁');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'Gwanganri beach', 35.1531696, 129.1164773, 'KOREA', '부산광역시 수영구 광안해변로 219',  '광안대교가 보이는 광안리 해수욕장', 'Busan', '광안리');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'HanOk Village', 35.815176,127.1530624, 'KOREA', '전라북도 전주시 완산구 풍남동 기린대로 99',  '전통이 살아있는 한옥마을', 'JeonJu', '한옥마을');
+INSERT INTO place_free VALUES(place_free_seq.nextVal, 'Millennium Park', 41.8825008, -87.6255315, 'UnitedState', '201 E Randolph St, Chicago, IL 60602',  'Cloud Gate is the centerpiece of AT&T Plaza at Millennium Park in the Loop community area of Chicago.', 'Chicago', '밀레니엄 공원');
+
 
 INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 06:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 08:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 10, 'rmsurll1@gmail.com');
 INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 18:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 20:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 1, 'rmsurll1@gmail.com');

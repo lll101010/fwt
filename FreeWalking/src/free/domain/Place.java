@@ -1,5 +1,7 @@
 package free.domain;
 
+import java.util.List;
+
 public class Place {
 	private int id;
 	private String name;
@@ -10,6 +12,8 @@ public class Place {
 	private String contents;
 	private String city;
 	private String nameKor;
+	private int todayGuide;
+	private int totalGuide;
 
 	public Place() {
 		super();
@@ -110,6 +114,25 @@ public class Place {
 
 	public void setNameKor(String nameKor) {
 		this.nameKor = nameKor;
+	}
+	
+	
+
+	public int getTodayGuide() {
+		return todayGuide;
+	}
+
+	public void setTodayGuide(int todayGuide) {
+		this.todayGuide = todayGuide;
+	}
+	
+
+	public int getTotalGuide() {
+		return totalGuide;
+	}
+
+	public void setTotalGuide(int totalGuide) {
+		this.totalGuide = totalGuide;
 	}
 
 	@Override

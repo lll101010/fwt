@@ -41,30 +41,26 @@ public class PageController {
 		
 		try {
 			
-			String lon = p.getLongitude(); // ����
-			String lat = p.getLatitude(); // �浵
+			String lon = p.getLongitude(); 
+			String lat = p.getLatitude(); 
 			
-			// OpenAPI call�ϴ� URL
 			String urlstr = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+lat+"&lon="+lon+"&cnt=7&APPID=77cd9531534b700e5c09415c07036121";
 			URL url = new URL(urlstr);
 			BufferedReader bf;
 			String line;
 			String result = "";
 
-			// ��������
 			bf = new BufferedReader(new InputStreamReader(url.openStream()));
 
 			
 			while ((line = bf.readLine()) != null) {
 				result = result.concat(line);
-				// System.out.println(line);
 			}
 
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
 			JSONArray jsonArray = (JSONArray) jsonObj.get("list");
 
-//			System.out.println("����Ʈ ���� : " + jsonArray.size());
 
 			for (int i = 0; i < jsonArray.size(); i++) {
 
@@ -72,12 +68,10 @@ public class PageController {
 				JSONArray weatherArray = (JSONArray) jsObj.get("weather");
 				JSONObject obj = (JSONObject) weatherArray.get(0);
 				model.addAttribute("day"+i,getWeather(obj.get("main").toString()));
-//				System.out.println("���� : " + obj.get("main"));
 				
 				JSONObject tempObj = (JSONObject) jsObj.get("temp");
 				double temp = Double.parseDouble(tempObj.get("day").toString())-273.15;
 				model.addAttribute("temp"+i,(int)temp);
-//				System.out.printf("�µ� : %.2f\n",temp);
 				
 				Calendar cal = new GregorianCalendar();
 			    cal.add(Calendar.DATE, i);
@@ -110,7 +104,8 @@ public class PageController {
 		System.out.println(list.size());
 		model.addAttribute("guideList",list);
 		
-//		List<TourV2> list2 = memtoService.findTourByMemberTour(userId);
+		List<TourV2> list2 = memtoService.findTourByMemberTour(userId);
+		model.addAttribute("tourList",list2);
 		
 		return "myPage";
 	}

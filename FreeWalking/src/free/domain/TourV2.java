@@ -13,6 +13,7 @@ public class TourV2 {
 	private File file;
 	private String title;
 	private int currentPerson;
+	private Place place;
 	
 	public TourV2() {
 		super();
@@ -113,14 +114,25 @@ public class TourV2 {
 	public void setCurrentPerson(int currentPerson) {
 		this.currentPerson = currentPerson;
 	}
+	
+	
+
+	public Place getPlace() {
+		return place;
+	}
+
+	public void setPlace(Place place) {
+		this.place = place;
+	}
 
 	@Override
 	public String toString() {
 		return "TourV2 [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", contents=" + contents
 				+ ", maxPerson=" + maxPerson + ", language=" + language + ", status=" + status + ", placeId=" + placeId
 				+ ", guideId=" + guideId + ", file=" + file + ", title=" + title + ", currentPerson=" + currentPerson
-				+ "]";
+				+ ", place=" + place + "]";
 	}
+
 	
 	
 	

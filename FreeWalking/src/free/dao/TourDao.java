@@ -30,4 +30,8 @@ public interface TourDao {
 	
 	public TourV2 searchTourV2ById(int id);
 	
+	public List<TourV2> searchTourByToday(int placeId);
+	
+	public List<Tour> searchAllTourByPlaceId(int placeId);
+	
 }

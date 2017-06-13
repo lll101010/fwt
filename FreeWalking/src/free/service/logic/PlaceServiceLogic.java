@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import free.dao.PlaceDao;
 import free.domain.Place;
 import free.service.PlaceService;
+import free.service.TourService;
 
 @Service
 public class PlaceServiceLogic implements PlaceService {
 	
 	@Autowired
 	private PlaceDao dao;
-
+	@Autowired
+	private TourService tService;
+	
 	@Override
 	public boolean registerPlace(Place place) {
 		return dao.createPlace(place);
@@ -32,7 +35,13 @@ public class PlaceServiceLogic implements PlaceService {
 
 	@Override
 	public List<Place> findAllPlace() {
-		return dao.searchAllPlace();
+		List<Place> places = dao.searchAllPlace();
+		for(Place p : places) {
+			p.setTodayGuide(tService.findTourByToday(p.getId()).size());
+			p.setTotalGuide(tService.findAllTourByPlaceId(p.getId()).size());
+		}
+		
+		return places;
 	}
 
 	@Override

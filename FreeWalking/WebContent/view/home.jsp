@@ -64,10 +64,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 											<div class="pricing-bottom-bottom">
 
 												<p>
-													<span>65GB </span> today guide
+													<span>${place.todayGuide } </span> today guide
 												</p>
 												<p>
-													<span>75</span> total guide
+													<span>${place.totalGuide }</span> total guide
 												</p>
 												<p>Address</p>
 												<p>

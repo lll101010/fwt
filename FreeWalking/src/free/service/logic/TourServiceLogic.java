@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import free.dao.FileDao;
+import free.dao.PlaceDao;
 import free.dao.TourDao;
 import free.domain.File;
 import free.domain.Place;
@@ -21,6 +22,8 @@ public class TourServiceLogic implements TourService {
 	private TourDao dao;
 	@Autowired
 	private FileDao fdao;
+	@Autowired
+	private PlaceDao pdao;
 
 	@Override
 	public boolean registerTour(Tour tour) {
@@ -49,7 +52,14 @@ public class TourServiceLogic implements TourService {
 
 	@Override
 	public List<TourV2> findTourByMemberId(String memberId) {
-		return dao.searchTourByMemberId(memberId);
+		
+		List<TourV2> tourList = dao.searchTourByMemberId(memberId);
+		
+		for(TourV2 t : tourList) {
+			t.setPlace(pdao.searchPlaceById(t.getPlaceId()));
+		}
+		
+		return tourList;
 	}
 
 	@Override
@@ -81,5 +91,15 @@ public class TourServiceLogic implements TourService {
 	@Override
 	public TourV2 findTourV2ByTourId(int id) {
 		return dao.searchTourV2ById(id);
+	}
+	
+	@Override
+	public List<TourV2> findTourByToday(int placeId) {
+		return dao.searchTourByToday(placeId);
+	}
+	
+	@Override
+	public List<Tour> findAllTourByPlaceId(int placeId) {
+		return dao.searchAllTourByPlaceId(placeId);
 	}
 }

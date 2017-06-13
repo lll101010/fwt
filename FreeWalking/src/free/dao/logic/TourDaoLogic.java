@@ -63,7 +63,20 @@ public class TourDaoLogic implements TourDao {
 	private static final String SQL_SELECT_GUIDEID_STARTDATE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title FROM tour_free" 
 															+ " WHERE guideId=? AND startdate=TO_DATE(?,'yyyy-MM-dd hh24:mi:ss')";
 
-	
+	private static final String SQL_SELECT_TOUR_TODAY = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
+													 + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
+													 	   + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
+													 	   									 + " FROM member_tour_free"
+													 	   									 + " GROUP BY tourId) dual"
+		 	   									     + " ON t.id = dual.tourId)"
+													 + " WHERE placeId=? AND TO_DATE(startdate, 'yyyy-MM-dd') = TO_DATE(sysdate, 'yyyy-MM-dd')";
+	private static final String SQL_SELECT_TOUR_ALL_PLACEID = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
+														   + " FROM (SELECT id, startdate, enddate, contents, maxperson, language, status, placeId, guideId, title, nvl(currentperson, 0) currentperson"
+													 	         + " FROM tour_free t FULL OUTER JOIN (SELECT tourId, count(*) currentperson"
+													 	   	  	    	    					   + " FROM member_tour_free"
+													 	   		    							   + " GROUP BY tourId) dual"
+													       + " ON t.id = dual.tourId)"
+													       + " WHERE placeId=?";
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -158,6 +171,16 @@ public class TourDaoLogic implements TourDao {
 	@Override
 	public TourV2 searchTourV2ById(int id) {
 		return (TourV2) jdbcTemplate.queryForObject(SQL_SELECT_TARGET_TOURV2, new Object[]{id}, TourDaoLogic::mappingTourV2);
+	}
+	
+	@Override
+	public List<TourV2> searchTourByToday(int placeId) {
+		return jdbcTemplate.query(SQL_SELECT_TOUR_TODAY, new Object[]{placeId}, TourDaoLogic::mappingTourV2);
+	}
+	
+	@Override
+	public List<Tour> searchAllTourByPlaceId(int placeId) {
+		return jdbcTemplate.query(SQL_SELECT_TOUR_ALL_PLACEID, new Object[]{placeId}, TourDaoLogic::mappingTour);
 	}
 	
 	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
