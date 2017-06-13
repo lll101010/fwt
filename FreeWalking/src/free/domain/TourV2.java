@@ -114,8 +114,6 @@ public class TourV2 {
 	public void setCurrentPerson(int currentPerson) {
 		this.currentPerson = currentPerson;
 	}
-	
-	
 
 	public Place getPlace() {
 		return place;

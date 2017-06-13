@@ -28,9 +28,9 @@
 		</nav>
 
 	<!-- news -->
-	<div class="news" id="news" style="background: lavender">
+	<div class="news" id="news" style="background: url(${ctx}/resource/images/badpark.jpg)no-repeat 0px 0px; background-size: 100% 100%;">
 		<!-- container -->
-		<div class="container" style="background: bisque;">
+		<div class="container" style="background: azure; opacity: 0.93">
 			<h3 class="w3title" style="padding-top: 1em;" >My Guide List</h3> 
 			<div class="news-wthreegrid" style="text-align: center;"> 
 				<c:if test="${empty guideList}">
@@ -50,10 +50,10 @@
 							</span>
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
-							<h5><a href="#myModal" data-toggle="modal">${guide.title }</a></h5>
+							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${guide.title }</a></h5>
 							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${guide.startDate } ~<br>End Date : ${guide.endDate }</p>
-							<p>${guide.place.address }</p>
-							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
+							<p>Address <br>${guide.place.address }</p>
+							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="showRead(${guide})">Read more</a> 
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -63,21 +63,29 @@
 		<!-- //container -->
 		
 		<!-- container -->
-		<div class="container" style="background: bisque; border-top:1.1px solid #f44336;">
+		<div class="container" style="background: azure; opacity: 0.93; border-top:1.1px solid #f44336;">
 			<h3 class="w3title" style="padding-top: 1em;">My Tour List</h3> 
 			<div class="news-wthreegrid" style="text-align: center;"> 
 				<c:if test="${empty tourList}">
 					<p class="noList">No Tour List</p>
 				</c:if>
-					<c:forEach var="guide" items="${tourList}" varStatus="sts">
+					<c:forEach var="tour" items="${tourList}" varStatus="sts">
 					<div class="news-grid-left">
 						<div class="col-md-3 col-xs-3 date">
-							<p>23</p>
-							<span>June</span>
+							<p>
+								${tour.currentPerson }/${tour.maxPerson }
+							</p>
+							<span>
+								<c:choose>
+									<c:when test="${tour.status eq '0' }">모집중</c:when>
+								</c:choose>
+							</span>
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
-							<h5><a href="#myModal" data-toggle="modal">${tour.title }</a></h5>
-							<p>${tour.place.name }</p>
+							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${tour.title }</a></h5>
+							<h5><a href="#myModal" data-toggle="modal">Guide ID : ${tour.guideId }</a></h5>
+							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${tour.startDate } ~<br>End Date : ${tour.endDate }</p>
+							<p>Address  <br>${tour.place.address }</p>
 							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
 						</div>
 						<div class="clearfix"> </div>
@@ -89,6 +97,23 @@
 		<!-- //container -->
 	</div>
 	<!-- //news -->
+	
+	<div class="modal bnr-modal fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+				</div> 
+				<div class="modal-body modal-spa">
+					<img src="images/bg2.jpg" class="img-responsive" alt=""/>
+					<h4>${guide.title }</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rutrum iaculis enim, non convallis felis mattis at. Donec fringilla lacus eu pretium rutrum. Cras aliquet congue ullamcorper. Etiam mattis eros eu ullamcorper volutpat. Proin ut dui a urna efficitur varius. uisque molestie cursus mi et congue consectetur adipiscing elit cras rutrum iaculis enim, Lorem ipsum dolor sit amet, non convallis felis mattis at. Maecenas sodales tortor ac ligula ultrices dictum et quis urna. Etiam pulvinar metus neque, eget porttitor massa vulputate in. Fusce lacus purus, pulvinar ut lacinia id, sagittis eu mi. Vestibulum eleifend massa sem, eget dapibus turpis efficitur at. Aliquam viverra quis leo et efficitur. Nullam arcu risus, scelerisque quis interdum eget, fermentum viverra turpis. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut At vero eos </p>
+				</div> 
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->  
+	
 	
 	<!-- login modal-about -->
 	<div class="modal bnr-modal fade" id="loginModal" tabindex="-1"
@@ -163,6 +188,14 @@
 	  location.reload();
 		
 	}	
+	</script>
+	
+	<script>
+	var showRead = function(data){
+		
+	}
+	
+	
 	</script>
 
 <script

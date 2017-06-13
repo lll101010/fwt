@@ -36,6 +36,7 @@ public class MemberServiceLogic implements MemberService{
 
 	@Override
 	public Member findMemberByMemberId(String memberId) {
+		
 		return dao.searchMemberById(memberId);
 	}
 

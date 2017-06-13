@@ -24,32 +24,31 @@ public class TourServiceLogic implements TourService {
 	private FileDao fdao;
 	@Autowired
 	private PlaceDao pdao;
-
 	@Override
 	public boolean registerTour(Tour tour) {
 		return fdao.createTourFile(tour.getFile(), dao.createTour(tour));
 	}
-
+ 
 	@Override
 	public boolean modifyTour(Tour tour) {
 		return dao.updateTour(tour);
 	}
-
+ 
 	@Override
 	public boolean removeTour(int tourId) {
 		return dao.deleteTour(tourId);
 	}
-
+ 
 	@Override
 	public List<Tour> findAllTour() {
 		return dao.searchAllTour();
 	}
-
+ 
 	@Override
 	public Tour findTourByTourId(int tourId) {
 		return dao.searchTourByTour(tourId);
 	}
-
+ 
 	@Override
 	public List<TourV2> findTourByMemberId(String memberId) {
 		
@@ -61,17 +60,17 @@ public class TourServiceLogic implements TourService {
 		
 		return tourList;
 	}
-
+ 
 	@Override
 	public List<Tour> findTourByPlaceDate(Date date, Place place) {
 		return dao.searchTourByDatePlace(date, place.getId());
 	}
-
+ 
 	@Override
 	public List<Tour> findTourByMemberDate(String memberId, Date date) {
 		return dao.searchTourByMemberIdDate(memberId, date);
 	}
-
+ 
 	
 	@Override
 	public List<TourV2> findTourByCondition(String firstDate, String lastDate, int people, int placeId) {

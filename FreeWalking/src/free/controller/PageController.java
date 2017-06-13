@@ -81,9 +81,7 @@ public class PageController {
 			    if(i == 0){
 			    	model.addAttribute("humidity",jsObj.get("humidity"));
 			    	model.addAttribute("wind",jsObj.get("speed"));
-			    	
 			    }
-
 			}
 
 			bf.close();
