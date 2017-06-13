@@ -65,7 +65,7 @@
 							data-pcontents="${guide.place.contents }"
 							data-paddress="${guide.place.address }"
 							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${guide.place.nameKor }"
+   								 &q=${guide.place.address }"
 							onclick="showMap()">Location</a> 
 						</div>
 						<div class="clearfix"> </div>
@@ -108,7 +108,7 @@
 							data-pcontents="${guide.place.contents }"
 							data-paddress="${guide.place.address }"
 							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${tour.place.nameKor }"
+   								 &q=${tour.place.address}"
 							onclick="showMap()">Location</a>
 						</div>
 						<div class="clearfix"> </div>

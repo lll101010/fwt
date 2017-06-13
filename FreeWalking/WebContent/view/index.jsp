@@ -285,7 +285,7 @@
 						class="map">
 						<iframe
 							src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${place.nameKor }" allowfullscreen">
+   								 &q=${place.address }" allowfullscreen">
 						</iframe>
 					</div>
 
