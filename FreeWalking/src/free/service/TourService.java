@@ -19,7 +19,7 @@ public interface TourService {
 
 	public Tour findTourByTourId(int tourId);
 
-	public List<Tour> findTourByMemberId(String memberId);
+	public List<TourV2> findTourByMemberId(String memberId);
 
 	public List<Tour> findTourByPlaceDate(Date date, Place place);
 

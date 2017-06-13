@@ -2201,3 +2201,9 @@ div#txt {
 .ApplyTour:hover {
 	    background:transparent;
 }
+
+.noList{
+	color:#02b875; 
+	text-decoration:none;
+	padding-bottom: 2.5em;
+}

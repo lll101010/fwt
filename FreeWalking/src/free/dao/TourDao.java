@@ -14,7 +14,7 @@ public interface TourDao {
 	
 	public boolean deleteTour(int tourId);
 	
-	public List<Tour> searchTourByMemberId(String memberId);
+	public List<TourV2> searchTourByMemberId(String memberId);
 	
 	public Tour searchTourByTour(int tourId);
 	
