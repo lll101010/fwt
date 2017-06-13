@@ -13,6 +13,7 @@ public class TourV2 {
 	private File file;
 	private String title;
 	private int currentPerson;
+	private Place place;
 	
 	public TourV2() {
 		super();
@@ -112,6 +113,15 @@ public class TourV2 {
 
 	public void setCurrentPerson(int currentPerson) {
 		this.currentPerson = currentPerson;
+	}
+	
+
+	public Place getPlace() {
+		return place;
+	}
+
+	public void setPlace(Place place) {
+		this.place = place;
 	}
 
 	@Override

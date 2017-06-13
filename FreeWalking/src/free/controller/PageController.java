@@ -87,9 +87,7 @@ public class PageController {
 			    if(i == 0){
 			    	model.addAttribute("humidity",jsObj.get("humidity"));
 			    	model.addAttribute("wind",jsObj.get("speed"));
-			    	
 			    }
-
 			}
 
 			bf.close();
@@ -110,7 +108,9 @@ public class PageController {
 		System.out.println(list.size());
 		model.addAttribute("guideList",list);
 		
-//		List<TourV2> list2 = memtoService.findTourByMemberTour(userId);
+		List<TourV2> list2 = memtoService.findTourByMemberTour(userId);
+		System.out.println(list2.size());
+		model.addAttribute("tourList",list2);
 		
 		return "myPage";
 	}

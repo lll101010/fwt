@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import free.dao.FileDao;
+import free.dao.PlaceDao;
 import free.dao.TourDao;
 import free.domain.File;
 import free.domain.Place;
@@ -21,47 +22,56 @@ public class TourServiceLogic implements TourService {
 	private TourDao dao;
 	@Autowired
 	private FileDao fdao;
-
+	@Autowired
+	private PlaceDao pdao;
+ 
 	@Override
 	public boolean registerTour(Tour tour) {
 		return fdao.createTourFile(tour.getFile(), dao.createTour(tour));
 	}
-
+ 
 	@Override
 	public boolean modifyTour(Tour tour) {
 		return dao.updateTour(tour);
 	}
-
+ 
 	@Override
 	public boolean removeTour(int tourId) {
 		return dao.deleteTour(tourId);
 	}
-
+ 
 	@Override
 	public List<Tour> findAllTour() {
 		return dao.searchAllTour();
 	}
-
+ 
 	@Override
 	public Tour findTourByTourId(int tourId) {
 		return dao.searchTourByTour(tourId);
 	}
-
+ 
 	@Override
 	public List<TourV2> findTourByMemberId(String memberId) {
-		return dao.searchTourByMemberId(memberId);
+		
+		List<TourV2> tourList = dao.searchTourByMemberId(memberId);
+		
+		for(TourV2 t : tourList) {
+			t.setPlace(pdao.searchPlaceById(t.getPlaceId()));
+		}
+		
+		return tourList;
 	}
-
+ 
 	@Override
 	public List<Tour> findTourByPlaceDate(Date date, Place place) {
 		return dao.searchTourByDatePlace(date, place.getId());
 	}
-
+ 
 	@Override
 	public List<Tour> findTourByMemberDate(String memberId, Date date) {
 		return dao.searchTourByMemberIdDate(memberId, date);
 	}
-
+ 
 	
 	@Override
 	public List<TourV2> findTourByCondition(String firstDate, String lastDate, int people, int placeId) {
