@@ -101,4 +101,9 @@ public class TourServiceLogic implements TourService {
 	public List<Tour> findAllTourByPlaceId(int placeId) {
 		return dao.searchAllTourByPlaceId(placeId);
 	}
+	
+	@Override
+	public List<Tour> findTourByCorrectDate(String startDate) {
+		return dao.searchTourByCorrectDate(startDate);
+	}
 }

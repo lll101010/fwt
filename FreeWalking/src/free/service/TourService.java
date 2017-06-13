@@ -34,4 +34,6 @@ public interface TourService {
 	public List<TourV2> findTourByToday(int placeId);
 	
 	public List<Tour> findAllTourByPlaceId(int placeId);
+	
+	public List<Tour> findTourByCorrectDate(String startDate);
 }

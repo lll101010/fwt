@@ -377,18 +377,15 @@
 								<option value="15">15</option>
 								<option value="100">no Matter</option>
 
-							</select> <br> <label>Language</label> <select class="form-control"
-								name="language">
-								<option value="ENGLISH">ENGLISH</option>
-								<option value="KOREAN">KOREAN</option>
-								<option value="JAPANESE">JAPANESE</option>
-								<option value="FRANCH">FRANCH</option>
-								<option value="CHINESE">CHINESE</option>
-								<option value="GERMAN">GERMAN</option>
-								<option value="OTHER">OTHER</option>
-
-							</select> <br>
-
+							</select> <br> 
+							
+							<!-- 언어 -->
+							<div class="form-group">
+								<label for="exampleInputPassword1">Language</label> <input
+									name="language" type="text" class="form-control" 
+									placeholder="language">
+							</div>
+							
 							<div class="form-group">
 								<label for="exampleInputFile">투어 파일 업로드</label> <input
 									type="file" name="image" id="exampleInputFile">
@@ -710,7 +707,15 @@
 					$("#timeCheck").text("중복된 신청입니다.")
 					timeFlag = false;
 					return false;
-				} else {
+				} else if (resultData == "timeOver") {
+					$("#timeCheck").text("지난 시간입니다.")
+					timeFlag = false;
+					return false;
+				} else if (resultData == "alreadyTourist")  {
+					$("#timeCheck").text("동시간대에 여행객으로 신청중입니다.")
+					timeFlag = false;
+				}
+				else {
 					$("#timeCheck").text("가이드 신청이 가능합니다.")
 					timeFlag = true;
 					return false;
@@ -728,7 +733,7 @@
 			alert("내용을 입력하시오.")
 			return false;
 		} else if (!timeFlag) {
-			alert("중복된 신청은 할 수 없습니다.")
+			alert("시간을 다시 정해주세요.")
 			return false;
 		} else {
 			alert("가이드를 시작합니다.");

@@ -34,4 +34,6 @@ public interface TourDao {
 	
 	public List<Tour> searchAllTourByPlaceId(int placeId);
 	
+	public List<Tour> searchTourByCorrectDate(String startDate);
+	
 }

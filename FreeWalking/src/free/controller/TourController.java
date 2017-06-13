@@ -2,6 +2,7 @@ package free.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -163,6 +164,32 @@ public class TourController {
 		Cal.add(Calendar.HOUR, Integer.parseInt(time));
 		String startDate = formatter.format(Cal.getTime());
 
+		long now = System.currentTimeMillis();
+		
+		try {
+			java.util.Date currentTime = new java.util.Date(now);
+			java.util.Date compareTime = formatter.parse(startDate);
+			if(!compareTime.after(currentTime)) {
+				return "timeOver";
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		//혹시 내가 다른 여행에 신청중인가
+		boolean timeFlag = true;
+		List<Tour> checkTours = service.findTourByCorrectDate(startDate);
+		for(Tour t : checkTours) {
+			if(!mToService.findMemberTourByAll(guideId, t.getId())) {
+				timeFlag = false;
+				
+			};
+		}
+		
+		if(timeFlag == false) {
+			return "alreadyTourist";
+		}
+		
 		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 
 		if (!t.isEmpty()) {

@@ -34,9 +34,6 @@ public class TourDaoLogic implements TourDao {
 		 	   									 + " GROUP BY tourId) dual"
 		 	   									 + " ON t.id = dual.tourId)"
 		 	   									 + "WHERE guideid=?"; 
-	
-//	 	   									"SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE guideid=?";
-	
 	private static final String SQL_SELECT_TOUR_TOURID = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE id=?";
 	private static final String SQL_SELECT_TOUR_DATE_PLACE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE startDate > ? AND startDate < ? + 1 AND placeId=?";
 	private static final String SQL_SELECT_ALL_TOUR = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free";
@@ -77,7 +74,9 @@ public class TourDaoLogic implements TourDao {
 													 	   		    							   + " GROUP BY tourId) dual"
 													       + " ON t.id = dual.tourId)"
 													       + " WHERE placeId=?";
-	
+	private static final String SQL_SELECT_TOUR_CORRECTTIME = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title "
+														   + " FROM tour_free "
+														   + " WHERE startdate = TO_DATE(?, 'yyyy-MM-dd hh24:mi:ss')";
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -181,6 +180,11 @@ public class TourDaoLogic implements TourDao {
 	@Override
 	public List<Tour> searchAllTourByPlaceId(int placeId) {
 		return jdbcTemplate.query(SQL_SELECT_TOUR_ALL_PLACEID, new Object[]{placeId}, TourDaoLogic::mappingTour);
+	}
+	
+	@Override
+	public List<Tour> searchTourByCorrectDate(String startDate) {
+		return jdbcTemplate.query(SQL_SELECT_TOUR_CORRECTTIME, new Object[]{startDate}, TourDaoLogic::mappingTour);
 	}
 	
 	public static Tour mappingTour(ResultSet rs, int rowNum) throws SQLException {
