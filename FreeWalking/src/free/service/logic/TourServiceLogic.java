@@ -48,7 +48,7 @@ public class TourServiceLogic implements TourService {
 	}
 
 	@Override
-	public List<Tour> findTourByMemberId(String memberId) {
+	public List<TourV2> findTourByMemberId(String memberId) {
 		return dao.searchTourByMemberId(memberId);
 	}
 

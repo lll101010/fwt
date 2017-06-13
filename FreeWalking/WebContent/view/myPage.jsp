@@ -39,11 +39,19 @@
 					<c:forEach var="guide" items="${guideList}" varStatus="sts">
 					<div class="news-grid-left">
 						<div class="col-md-3 col-xs-3 date">
-							<p>23</p>
-							<span>${guide.startDate }</span>
+							<p>
+								${guide.currentPerson }/${guide.maxPerson }
+							</p>
+							<span>
+								<c:choose>
+									<c:when test="${guide.status eq '0' }">모집중</c:when>
+								
+								</c:choose>
+							</span>
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
 							<h5><a href="#myModal" data-toggle="modal">${guide.title }</a></h5>
+							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${guide.startDate } ~<br>End Date : ${guide.endDate }</p>
 							<p>${guide.contents }</p>
 							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal">Read more</a> 
 						</div>
