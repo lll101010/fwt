@@ -136,3 +136,5 @@ INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 18:00:00
 
 
 메세지 데이트->string
+조건-> c: yorizori 폴더 이미지, server context path 설정
+
