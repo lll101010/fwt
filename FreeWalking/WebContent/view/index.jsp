@@ -800,7 +800,7 @@
 			    $('#tourTitle').text(tourtitle);
 			    $('#tourContent').text(contents);
 			    $('#tourGuide').text(guide);
-			    $('#AddPerson').text('1');
+			    $('#pcnt').text('1');
 			    $('#datailTid').val(tid);
 			    $('#hiddenDate').val(hDate);
 			    $('#tourlanguage').text('사용언어 : '+tourlang);

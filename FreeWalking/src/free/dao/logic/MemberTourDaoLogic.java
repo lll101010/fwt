@@ -23,7 +23,7 @@ public class MemberTourDaoLogic implements MemberTourDao {
 	private static final String SQL_DELETE_MEMBER_TOUR = "DELETE FROM member_tour_free WHERE memberId=? AND tourId=?";
 	private static final String SQL_DELETE_MEMBER_TOUR_TOURID = "DELETE FROM member_tour_free WHERE tourId=?";
 //	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID = "SELECT id, startDate, endDate, contents, maxPerson, language, status, placeId, guideId From tour_free t, member_tour_free mt WHERE t.id=mt.tourId AND mt.memberId=?";
-	private static final String SQL_SELECT_MEMBERTOUR_TOURID = "SELECT id, password, name, gender, age, email, phone FROM member_free m, member_tour_free mt WHERE m.id = mt.memberId AND mt.tourId=?";
+	private static final String SQL_SELECT_MEMBERTOUR_TOURID = "SELECT distinct memberid,tourid FROM member_tour_free WHERE tourId=?";
 	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID_TOURID = "SELECT * FROM member_tour_free WHERE memberId=? AND tourId=?";
 	
 	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID= "SELECT DISTINCT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title, currentPerson" 
@@ -64,8 +64,8 @@ public class MemberTourDaoLogic implements MemberTourDao {
 	}
 
 	@Override
-	public List<Member> searchMemberByTourId(int tourId) {
-		return jdbcTemplate.query(SQL_SELECT_MEMBERTOUR_TOURID, new Object[]{tourId}, MemberTourDaoLogic::mappingMember);
+	public List<MemberTour> searchMemberByTourId(int tourId) {
+		return jdbcTemplate.query(SQL_SELECT_MEMBERTOUR_TOURID, new Object[]{tourId}, MemberTourDaoLogic::mappingMemberTour);
 	}
 
 	@Override

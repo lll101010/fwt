@@ -9,7 +9,7 @@ import free.dao.FileDao;
 import free.dao.MemberTourDao;
 import free.dao.PlaceDao;
 import free.domain.File;
-import free.domain.Member;
+import free.domain.MemberTour;
 import free.domain.TourV2;
 import free.service.MemberTourService;
 
@@ -38,7 +38,7 @@ public class MemberTourServiceLogic implements MemberTourService{
 	}
 
 	@Override
-	public List<Member> findMemberByMemberTour(int tourId) {
+	public List<MemberTour> findMemberByMemberTour(int tourId) {
 		return dao.searchMemberByTourId(tourId);
 	}
 

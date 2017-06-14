@@ -59,7 +59,7 @@ public class MessageDaoLogic implements MessageDao {
 		Message m = new Message();
 		m.setId(rs.getInt("id"));
 		m.setContents(rs.getString("contents"));
-		m.setRegistDate(rs.getDate("registDate"));
+		m.setRegistDate(rs.getString("registDate"));
 		m.setFromMemberId(rs.getString("fromMemberId"));
 		m.setToMemberId(rs.getString("toMemberId"));
 		return m;

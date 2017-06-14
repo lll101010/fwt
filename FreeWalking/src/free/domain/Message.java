@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Message {
 	private int id;
 	private String contents;
-	private Date registDate;
+	private String registDate;
 	private String fromMemberId;
 	private String toMemberId;
 
@@ -13,7 +13,7 @@ public class Message {
 		super();
 	}
 
-	public Message(String contents, Date registDate, String fromMemberId, String toMemberId) {
+	public Message(String contents, String registDate, String fromMemberId, String toMemberId) {
 		super();
 		this.contents = contents;
 		this.registDate = registDate;
@@ -21,7 +21,7 @@ public class Message {
 		this.toMemberId = toMemberId;
 	}
 
-	public Message(int id, String contents, Date registDate, String fromMemberId, String toMemberId) {
+	public Message(int id, String contents, String registDate, String fromMemberId, String toMemberId) {
 		super();
 		this.id = id;
 		this.contents = contents;
@@ -46,11 +46,11 @@ public class Message {
 		this.contents = contents;
 	}
 
-	public Date getRegistDate() {
+	public String getRegistDate() {
 		return registDate;
 	}
 
-	public void setRegistDate(Date registDate) {
+	public void setRegistDate(String registDate) {
 		this.registDate = registDate;
 	}
 
