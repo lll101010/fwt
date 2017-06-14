@@ -89,7 +89,7 @@ CREATE TABLE post_file_free (
 CREATE TABLE message_free (
   id NUMBER PRIMARY KEY,
   contents VARCHAR(3000),
-  registDate DATE,
+  registDate VARCHAR2(50),
   fromMemberId VARCHAR(30),
   toMemberId VARCHAR(30) 
 );

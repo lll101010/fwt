@@ -920,7 +920,7 @@
 			
 			$.each(resultData, function(index, meesage) {
 				messageHtml += '<div style="display: flex;width:100%;">';
-				messageHtml += '<div style=" text-align: center; width: 20%; "><a href="#" onclick="showResend()"><span id="resendId">'+meesage.fromMemberId+'</span></a></div>';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><a href="#" onclick="showResend()"><span id="resendId" class="reMsgid">'+meesage.fromMemberId+'</span></a></div>';
 				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.registDate+'</span></div>';
 				messageHtml += '<div style=" text-align: center; width: 60%; "><span style="text-align: center;">'+meesage.contents+'</span>'+
 								'<a href="#" onclick="dropMessage('+meesage.id+')">'+
