@@ -116,8 +116,8 @@ public class TourController {
 			i++;
 
 		}
-
 		return tours;
+		
 	}
 
 	@RequestMapping("tourApply.do")

@@ -450,6 +450,7 @@
 					<h4 id="tourTitle"></h4><h5 id="tourGuide"></h5>
 					</div>
 					<p id="tourContent"></p>
+					<p id="tourlanguage" style="font-weight: bold;"></p>
 					<div class="person" style="text-align: center; margin:1em;">
 						<h3>Person</h3>
 						<div class="quantity">
@@ -608,9 +609,6 @@
  			document.getElementById("guideId").value = email;
 			document.getElementById("applyId").value = email;
 			
- 			console.log(name);
-			console.log(email);
-			console.log(imageurl);
 			
 			$('#profileImg').attr("src", imageurl)
 			$('.loginS').css("display", "block");
@@ -665,6 +663,10 @@
 			tourApplyHtml+= '<div id="blog" class="services blog">';
 			tourApplyHtml+= '<div class="container">';  
 			tourApplyHtml+= '<div class="blog-agileinfo">';
+				
+			if(resultData.length == 0){
+				tourApplyHtml+= '<p style="text-align: center;font-weight: bold;">해당 기간에 투어가 존재 하지 않습니다. 기간을 다시 선택하세요.</p>';
+			}
 			
 			$.each(resultData, function(index, tour) {
 
@@ -680,7 +682,7 @@
 				tourApplyHtml += '<p class="w3-agilep">';
 				tourApplyHtml += 'Posted By &nbsp;<a href="#">' + tour.guideId + '</a> <br/> Now Person/Max Person &nbsp;&nbsp; ' + tour.currentPerson + '/' + tour.maxPerson 
 				tourApplyHtml += '<br/> Date :  ' + tour.startDate + ' ~ ' + tour.endDate + '</p>';
-				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-hdate='"+tour.startDate+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
+				tourApplyHtml += "<a href='#myTourModal' data-imgsrc='/img/"+tour.file.name+"' data-tid='"+tour.id+"' data-tlang='"+tour.language+"' data-hdate='"+tour.startDate+"' data-guide='"+tour.guideId+"' data-tourtitle='"+tour.title+"' data-contents='"+tour.contents+"'  onclick='TourImgShow()' class='wthree-btn w3btn2 w3btn2a' data-toggle='modal' >Read more</a>";
 				tourApplyHtml += '</div> </div> </div>';
 			});
 
@@ -726,7 +728,6 @@
 	}
 	
 	$('#guideForm').on('submit',function() {
-		console.log(timeFlag);
 		if($("#applyTitle").val() == "") {
 			alert("제목을 입력하시오.")
 			return false;
@@ -759,8 +760,7 @@
 				var guide = $(event.relatedTarget).data('guide');
 				var tid = $(event.relatedTarget).data('tid');
 				var hDate = $(event.relatedTarget).data('hdate');
-				console.log(tid);
-				console.log(hDate);
+				var tourlang = $(event.relatedTarget).data('tlang');
 			/*  $('#myTourModal').on('show.bs.modal', function(event) {           
 			        var seq = $(event.relatedTarget).data('id');
 			        console.log(seq);
@@ -772,6 +772,7 @@
 			    $('#AddPerson').text('1');
 			    $('#datailTid').val(tid);
 			    $('#hiddenDate').val(hDate);
+			    $('#tourlanguage').text('사용언어 : '+tourlang);
 			});
 			
 		}
@@ -839,7 +840,6 @@
 	
 	<script>
 	var myPage = function(){
-		console.log("여기");
 		$('#myPageform').submit();
 		
 	}
