@@ -9,7 +9,6 @@
 	<!-- 구글oauth관련 -->
 <body>
 
-
 	<!-- 로그인 전 네비 -->
 		<nav class="cd-stretchy-nav edit-content">
 			<a class="cd-nav-trigger" href="#0"> Menu <span
@@ -28,7 +27,7 @@
 		</nav>
 
 	<!-- news -->
-	<div class="news" id="news" style="background: url(${ctx}/resource/images/badpark.jpg) no-repeat 0px 0px; opacity: 0.8; background-size: 100% 100%;  ">
+	<div class="news" id="news" style="background: url(${ctx}/resource/images/mbg.jpg) no-repeat 0px 0px; opacity: 0.8; background-size: 100% 120%;  ">
 		<!-- container -->
 		<div class="container" style="background: azure; opacity: 0.93">
 			<h3 class="w3title" style="padding-top: 1em;" >My Guide List</h3> 
@@ -59,6 +58,7 @@
 							data-mtitle="${guide.title}" 
 							data-mcontents="${guide.contents }"
 							data-mimgsrc="/img/${guide.file.name }"
+							data-mlang="${guide.language }"
 							onclick="showRead()"
 							
 							>Read more</a>
@@ -104,10 +104,11 @@
 							data-mtitle="${tour.title}" 
 							data-mcontents="${tour.contents }"
 							data-mimgsrc="/img/${tour.file.name }"
+							data-mlang="${tour.language }"
 							onclick="showRead()">Read more</a> 
 							<a href="#mapModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
-							data-pcontents="${guide.place.contents }"
-							data-paddress="${guide.place.address }"
+							data-pcontents="${tour.place.contents }"
+							data-paddress="${tour.place.address }"
 							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
    								 &q=${tour.place.address}"
 							onclick="showMap()">Location</a>
@@ -158,6 +159,7 @@
 					<img src="" class="img-responsive" alt=""/ id="ModalImg">
 					<h4 id="ModalTitle"></h4>
 					<p id="ModalContents"></p>
+					<p id="ModalLang" style="font-weight: bold;"></p>
 				</div> 
 			</div>
 		</div>
@@ -196,9 +198,6 @@
 			var name = profile.getName();
 			var email = profile.getEmail();
 
-			console.log(name);
-			console.log(email);
-			console.log(imageurl);
 			
 			$('.loginS').css("display", "block");
 			$('#gA').css("display", "inline-block");
@@ -245,10 +244,12 @@
 				var mimgsrc = $(event.relatedTarget).data('mimgsrc'); // Button that triggered the modal
 				var modaltitle = $(event.relatedTarget).data('mtitle'); // Button that triggered the modal
 				var modalcontents = $(event.relatedTarget).data('mcontents'); 
+				var modallang = $(event.relatedTarget).data('mlang');
+				
+				$("#ModalLang").text('사용언어 : '+modallang);
 			 	$('#ModalTitle').text(modaltitle);
 			 	$('#ModalContents').text(modalcontents);
 			    $('#ModalImg').attr('src', mimgsrc);
-				console.log(modaltitle);
 			});
 	}
 	var showMap = function(){
@@ -256,6 +257,7 @@
 			var mapsrc = $(event.relatedTarget).data('psrc'); // Button that triggered the modal
 			var mapaddress = $(event.relatedTarget).data('paddress'); // Button that triggered the modal
 			var mapcontents = $(event.relatedTarget).data('pcontents'); 
+			
 		 	$('#mplacecontents').text(mapcontents);
 		 	$('#mplaceaddress').text(mapaddress);
 		    $('#mplacesrc').attr('src', mapsrc);
