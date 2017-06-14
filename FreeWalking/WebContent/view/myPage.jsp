@@ -67,7 +67,9 @@
 							data-paddress="${guide.place.address }"
 							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
    								 &q=${guide.place.address }"
-							onclick="showMap()">Location</a> 
+							onclick="showMap()">Location</a>
+							<a href="${ctx }/cancelGuide.do?tourId=${guide.id }&userId=${guide.guideId}" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
+							>Cancel Guide</a>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -112,6 +114,8 @@
 							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
    								 &q=${tour.place.address}"
 							onclick="showMap()">Location</a>
+							<a href="${ctx }/cancelTour.do?tourId=${guide.id }&userId=${guide.guideId}" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
+							>Cancel Tour</a>
 						</div>
 						<div class="clearfix"> </div>
 					</div>

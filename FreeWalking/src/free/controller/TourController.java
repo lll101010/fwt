@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -117,7 +118,7 @@ public class TourController {
 
 		}
 		return tours;
-		
+
 	}
 
 	@RequestMapping("tourApply.do")
@@ -140,11 +141,8 @@ public class TourController {
 
 		// 내가 그 시간대에 가이드가 있다면 안된다. 시간이랑 가이드 아이디 겹치면 안 되도록만들자
 		// aid가
-		System.out.println("aid : " + aid);
-		System.out.println("hiddenDate : " + hiddenDate);
-		
+
 		List<Tour> checkTours = service.findTourByGuideIdStartdate(aid, hiddenDate);
-		System.out.println("checkTours.size() : " + checkTours.size());
 		if (!checkTours.isEmpty()) {
 			return "alreadyGuide";
 		}
@@ -165,31 +163,30 @@ public class TourController {
 		String startDate = formatter.format(Cal.getTime());
 
 		long now = System.currentTimeMillis();
-		
+
 		try {
 			java.util.Date currentTime = new java.util.Date(now);
 			java.util.Date compareTime = formatter.parse(startDate);
-			if(!compareTime.after(currentTime)) {
+			if (!compareTime.after(currentTime)) {
 				return "timeOver";
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		//혹시 내가 다른 여행에 신청중인가
+
+		// 혹시 내가 다른 여행에 신청중인가
 		boolean timeFlag = true;
 		List<Tour> checkTours = service.findTourByCorrectDate(startDate);
-		for(Tour t : checkTours) {
-			if(!mToService.findMemberTourByAll(guideId, t.getId())) {
+		for (Tour t : checkTours) {
+			if (!mToService.findMemberTourByAll(guideId, t.getId())) {
 				timeFlag = false;
-				
-			};
+			}
 		}
-		
-		if(timeFlag == false) {
+
+		if (timeFlag == false) {
 			return "alreadyTourist";
 		}
-		
+
 		List<Tour> t = service.findTourByGuideIdStartdate(guideId, startDate);
 
 		if (!t.isEmpty()) {
@@ -200,4 +197,23 @@ public class TourController {
 
 	}
 
+	@RequestMapping(value = "cancelGuide.do")
+	public String cancelGuide(int tourId, String userId, RedirectAttributes redirectAttributes) {
+		
+		service.removeTour(tourId);
+		
+		redirectAttributes.addAttribute("userId", userId);
+		
+		return "redirect:/myPage.do";
+	}
+	
+	@RequestMapping(value = "cancelTour.do")
+	public String cancelTour(int tourId, String userId, RedirectAttributes redirectAttributes) {
+		
+		mToService.removeMemberTour(tourId, userId);
+		
+		redirectAttributes.addAttribute("userId", userId);
+		
+		return "redirect:/myPage.do";
+	}
 }

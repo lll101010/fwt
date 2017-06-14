@@ -31,6 +31,11 @@ public class MemberTourServiceLogic implements MemberTourService{
 	public boolean removeMemberTour(int tourId, String memberId) {
 		return dao.deleteMemberTour(memberId, tourId);
 	}
+	
+	@Override
+	public boolean removeMemberTour(int tourId) {
+		return dao.deleteMemberTourByTourId(tourId);
+	}
 
 	@Override
 	public List<Member> findMemberByMemberTour(int tourId) {

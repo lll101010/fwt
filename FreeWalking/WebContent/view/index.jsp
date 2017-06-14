@@ -332,6 +332,7 @@
 							</div>
 
 							<label>Time</label> <select class="form-control" id=applyTime name="time" onchange="check()">
+								<option value=""> 시간을 선택해주세요.</option>
 								<option value="6">06:00 ~ 08:00</option>
 								<option value="7">07:00 ~ 09:00</option>
 								<option value="8">08:00 ~ 10:00</option>
@@ -383,7 +384,7 @@
 							<!-- 언어 -->
 							<div class="form-group">
 								<label for="exampleInputPassword1">Language</label> <input
-									name="language" type="text" class="form-control" 
+									name="language" type="text" class="form-control" id="applyLanguage" 
 									placeholder="language">
 							</div>
 							
@@ -396,7 +397,7 @@
 								value="${place.id }"> <input type="hidden" id="guideId"
 								name="guideId" value="">
 
-							<button type="submit">Apply</button>
+							<button type="button" onclick="applysubmit()">Apply</button>
 						</form>
 					</div>
 				</div>
@@ -592,6 +593,9 @@
 
 		document.getElementById("firstDate").min = today;
 		document.getElementById("firstDate").value = today;
+		
+		document.getElementById("applyDate").min = today;
+		document.getElementById("applyDate").value = today;
 
 		document.getElementById("lastDate").min = today;
 		document.getElementById("lastDate").value = today;
@@ -727,25 +731,36 @@
 		});
 	}
 	
-	$('#guideForm').on('submit',function() {
+	var applysubmit = function() {
 		if($("#applyTitle").val() == "") {
-			alert("제목을 입력하시오.")
+			jQuery('#applyOk').modal();
+			$('#resultText').text('제목을 입력하시오.');
 			return false;
 		} else if ($("#applyContents").val() == "") {
-			alert("내용을 입력하시오.")
+			jQuery('#applyOk').modal();
+			$('#resultText').text('내용을 입력하시오.');
+			return false;
+		} else if ($('#applyTime').val() == "") {
+			jQuery('#applyOk').modal();
+			$('#resultText').text('시간을 선택해주세요.');
+			return false;
+		} else if ($("#applyLanguage").val() == "") {
+			jQuery('#applyOk').modal();
+			$('#resultText').text('사용 가능 언어를 입력하시오.');
 			return false;
 		} else if (!timeFlag) {
-			alert("시간을 다시 정해주세요.")
+			jQuery('#applyOk').modal();
+			$('#resultText').text('시간을 다시 정해주세요.');
 			return false;
 		} else {
-			alert("가이드를 시작합니다.");
-			return true;
+			jQuery('#applyOk').modal();
+			$('#resultText').text('가이드를 시작합니다.');
+			setTimeout(function(){
+				$('#guideForm').submit();
+			},2000);
 		}
 	
-	});
-	
-	
-	
+	};
 	
 	</script>
 	
@@ -761,10 +776,6 @@
 				var tid = $(event.relatedTarget).data('tid');
 				var hDate = $(event.relatedTarget).data('hdate');
 				var tourlang = $(event.relatedTarget).data('tlang');
-			/*  $('#myTourModal').on('show.bs.modal', function(event) {           
-			        var seq = $(event.relatedTarget).data('id');
-			        console.log(seq);
-			    }); */
 			    $('#tourImg').attr('src',imgsrc);
 			    $('#tourTitle').text(tourtitle);
 			    $('#tourContent').text(contents);
@@ -821,7 +832,6 @@
 					$('#resultText').text('최대 인원 초과로 신청이 실패했습니다.');
 					jQuery('#myTourModal').modal('hide');
 				} else if (resultData == 'alreadyTour') {
-					
 					jQuery('#applyOk').modal();
 					$('#resultText').text('이미 신청하셨습니다.');
 					jQuery('#myTourModal').modal('hide');

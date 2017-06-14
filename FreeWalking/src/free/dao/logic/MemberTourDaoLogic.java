@@ -21,6 +21,7 @@ public class MemberTourDaoLogic implements MemberTourDao {
 
 	private static final String SQL_INSERT_MEMBER_TOUR = "INSERT INTO member_tour_free VALUES(?, ?)";
 	private static final String SQL_DELETE_MEMBER_TOUR = "DELETE FROM member_tour_free WHERE memberId=? AND tourId=?";
+	private static final String SQL_DELETE_MEMBER_TOUR_TOURID = "DELETE FROM member_tour_free WHERE tourId=?";
 //	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID = "SELECT id, startDate, endDate, contents, maxPerson, language, status, placeId, guideId From tour_free t, member_tour_free mt WHERE t.id=mt.tourId AND mt.memberId=?";
 	private static final String SQL_SELECT_MEMBERTOUR_TOURID = "SELECT id, password, name, gender, age, email, phone FROM member_free m, member_tour_free mt WHERE m.id = mt.memberId AND mt.tourId=?";
 	private static final String SQL_SELECT_MEMBERTOUR_MEMBERID_TOURID = "SELECT * FROM member_tour_free WHERE memberId=? AND tourId=?";
@@ -50,6 +51,11 @@ public class MemberTourDaoLogic implements MemberTourDao {
 	@Override
 	public boolean deleteMemberTour(String memberId, int tourId) {
 		return jdbcTemplate.update(SQL_DELETE_MEMBER_TOUR, new Object[]{memberId, tourId}) > 0;
+	}
+	
+	@Override
+	public boolean deleteMemberTourByTourId(int tourId) {
+		return jdbcTemplate.update(SQL_DELETE_MEMBER_TOUR_TOURID, new Object[]{tourId}) > 0;
 	}
 
 	@Override

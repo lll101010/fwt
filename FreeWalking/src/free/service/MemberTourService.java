@@ -12,6 +12,8 @@ public interface MemberTourService {
 	
 	public boolean removeMemberTour(int tourId, String memberId);
 	
+	public boolean removeMemberTour(int tourId);
+	
 	public List<Member> findMemberByMemberTour(int tourId);
 	
 	public List<TourV2> findTourByMemberTour(String memberId);
