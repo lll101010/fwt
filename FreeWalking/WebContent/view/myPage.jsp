@@ -384,6 +384,21 @@
 		
 	}
 	
+	var showResend = function(){
+		
+		var resendedId = $('#resendId').text();
+		var userListHtml = "<h4>아이디를 선택하세요</h4>";
+		userListHtml += '<select class="form-control" id="selectId" name="selectId" >';
+		userListHtml += '<option value='+resendedId+'>'+resendedId+'<option>';
+		userListHtml += '</select><br>';
+		userListHtml += '<h4>보낼 메시지를 입력하세요</h4>';
+		userListHtml += '<input type="text" class="form-control" placeholder="Message Input max size 50" maxlength="50" id="messageContent">';
+		userListHtml +='<br><button type="button" onclick="MessagePost()" class="sbBtn">Send</button>';
+		$('#userList').empty();
+		$("#userList").append(userListHtml);
+		jQuery('#sendMessage').modal();
+	}
+	
 	
 	
 	var displayUserList = function(resultData) {
@@ -451,7 +466,7 @@
 			
 			$.each(resultData, function(index, meesage) {
 				messageHtml += '<div style="display: flex;width:100%;">';
-				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.fromMemberId+'</span></div>';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><a href="#" onclick="showResend()"><span id="resendId">'+meesage.fromMemberId+'</span></a></div>';
 				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.registDate+'</span></div>';
 				messageHtml += '<div style=" text-align: center; width: 60%; "><span style="text-align: center;">'+meesage.contents+'</span>'+
 								'<a href="#" onclick="dropMessage('+meesage.id+')">'+

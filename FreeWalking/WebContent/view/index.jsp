@@ -513,6 +513,32 @@
 	<!-- //modal-about -->
 
 
+	<!-- 샌드 메세지 -->
+	<div class="modal bnr-modal fade" id="sendMessage" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+				</div> 
+				<div class="modal-body modal-spa" id="userList">
+				<!-- 	<h4>아이디를 선택하세요</h4>
+					<select class="form-control" id="selectId" name="selectId" >
+						<option value=""> all </option>
+						<option value="6">06:00 ~ 08:00</option>
+					</select>
+					<br>
+					<h4>보낼 메시지를 입력하세요</h4>
+					<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Message Input max size 50" maxlength="50">
+					<br>
+					<button type="button" onclick="" class="sbBtn">Send</button>  -->
+				</div> 
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->
+
+
+
 	<!-- Custom-JavaScript-File-Links -->
 
 	<!-- Default-JavaScript -->
@@ -625,11 +651,12 @@
 	<!-- //Custom-JavaScript-File-Links -->
 
 	<script>
+	var email
 		function onSuccess(googleUser) {
 			var profile = googleUser.getBasicProfile();
 			var imageurl = profile.getImageUrl();
 			var name = profile.getName();
-			var email = profile.getEmail();
+			email = profile.getEmail();
 			
  			document.getElementById("guideId").value = email;
 			document.getElementById("applyId").value = email;
@@ -893,7 +920,7 @@
 			
 			$.each(resultData, function(index, meesage) {
 				messageHtml += '<div style="display: flex;width:100%;">';
-				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.fromMemberId+'</span></div>';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><a href="#" onclick="showResend()"><span id="resendId">'+meesage.fromMemberId+'</span></a></div>';
 				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.registDate+'</span></div>';
 				messageHtml += '<div style=" text-align: center; width: 60%; "><span style="text-align: center;">'+meesage.contents+'</span>'+
 								'<a href="#" onclick="dropMessage('+meesage.id+')">'+
@@ -923,6 +950,49 @@
 					findMessage();
 				}
 			});
+		};
+		
+		
+		var showResend = function(){
+			
+			var resendedId = $('#resendId').text();
+			var userListHtml = "<h4>아이디를 선택하세요</h4>";
+			userListHtml += '<select class="form-control" id="selectId" name="selectId" >';
+			userListHtml += '<option value='+resendedId+'>'+resendedId+'<option>';
+			userListHtml += '</select><br>';
+			userListHtml += '<h4>보낼 메시지를 입력하세요</h4>';
+			userListHtml += '<input type="text" class="form-control" placeholder="Message Input max size 50" maxlength="50" id="messageContent">';
+			userListHtml +='<br><button type="button" onclick="MessagePost()" class="sbBtn">Send</button>';
+			$('#userList').empty();
+			$("#userList").append(userListHtml);
+			jQuery('#sendMessage').modal();
+		};
+		
+		
+		var MessagePost = function(){
+			if($("#selectId option:selected").val()==""){
+				$('#resultText').text('아이디를 선택해주세요.');
+				jQuery('#sendOk').modal();
+				return false;
+			}
+			
+			$.ajax({
+				url : "${ctx}/regmessage.ajax",
+				type : "post",
+				data : {
+					uid : $("#selectId option:selected").val(),
+					content : $('#messageContent').val(),
+					fromid : email
+				},
+				success : function(){
+					
+					$('#resultText').text('메세지가 전송되었습니다.');
+					jQuery('#applyOk').modal();
+					jQuery('#sendMessage').modal('hide');
+				}
+			});
+			
+			
 		};
 	</script>
 	<!-- 메세지 -->
