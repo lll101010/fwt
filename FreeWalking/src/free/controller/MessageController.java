@@ -32,4 +32,5 @@ public class MessageController {
 		System.out.println(mid);
 		return mservice.removeMessage(Integer.parseInt(mid));
 	}
+	
 }
