@@ -45,7 +45,8 @@
 							</p>
 							<span>
 								<c:choose>
-									<c:when test="${guide.status eq '0' }">모집중</c:when>
+									<c:when test="${guide.maxPerson eq guide.currentPerson }">모집완료</c:when>
+									<c:otherwise>모집중</c:otherwise>
 								
 								</c:choose>
 							</span>

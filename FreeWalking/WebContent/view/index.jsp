@@ -28,7 +28,7 @@
 			<div class="container">
 				<div class="logo" style="display: flex">
 					<h1>
-						<a href="#" style=" text-shadow: 0 0 2px #f00;">Free Walking Tour</a>
+						<a href="${ctx }/placelist.do" style=" text-shadow: 0 0 2px #f00;">Free Walking Tour</a>
 					</h1>
 					<img src="" id="profileImg" style="max-height: 45px" class="img-circle">
 				</div>

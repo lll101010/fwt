@@ -96,10 +96,8 @@ public class PageController {
 	
 	@RequestMapping("myPage.do")
 	public String myPage(String userId,Model model){
-		System.out.println(userId);
 		
 		List<TourV2> list = tourService.findTourByMemberId(userId);
-		System.out.println(list.size());
 		model.addAttribute("guideList",list);
 		
 		List<TourV2> list2 = memtoService.findTourByMemberTour(userId);
