@@ -20,11 +20,47 @@
 					style="content: '\f012';" id="loginNav"><span id="loginSpan">Login</span></a></li>
 				<li><a href="#portfolio" class="scroll"><span>Gallery</span></a></li>
 				<li><a href="#blog" class="scroll"><span>Board</span></a></li>
-				<li><a href="#services" class="loginS" style="display: none;"><span>Message</span></a></li>
+				<li><a href="#messageModal" onclick="findMessage()" data-toggle="modal" class="loginS" style="display: none;"><span>Message</span></a></li>
 				<li><a href="#" onclick="myPage()" class="loginS" style="display: none;"><span>MyTour</span></a></li>
 			</ul>
 			<span aria-hidden="true" class="stretchy-nav-bg"></span>
 		</nav>
+		
+		<!-- message modal -->
+		<div class="modal bnr-modal fade" id="messageModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document" style="width: 90%">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body modal-spa">
+						<!-- <img src="images/bg2.jpg" class="img-responsive" alt="" /> -->
+						<h4 style="text-align: center;">Message Box</h4>
+						<br>
+						<div style="display: inline-flex;width: 100%;color: coral;font-weight: bold;">
+							<div style=" text-align: center; width: 20%; "><span>보낸사람  </span></div>
+							<div style=" text-align: center; width: 20%; "><span>보낸시간  </span></div>
+							<div style=" text-align: center; width: 60%; "><span style="text-align: center;"> 내용</span></div>
+						</div>
+						<br><br>
+						<div id="messageContents" style="width: 100%;">
+							<div style=" text-align: center; width: 20%; "><span>lll101010s2@gmail.com  </span></div>
+							<div style=" text-align: center; width: 20%; "><span>2017-06-14 11:00  </span></div>
+							<div style=" text-align: center; width: 60%; "><span style="text-align: center;"> dasdsadsad</span>
+								<a href="#">
+									<button type="button" class="close" aria-label="Close" style="color: coral;">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<!-- news -->
 	<div class="news" id="news" style="background: url(${ctx}/resource/images/mbg.jpg) no-repeat 0px 0px; opacity: 0.8; background-size: 100% 120%;  ">
@@ -192,11 +228,14 @@
 	<!-- //modal-about -->
 	
 	<script>
+	
+	var email = "";
+	
 		function onSuccess(googleUser) {
 			var profile = googleUser.getBasicProfile();
 			var imageurl = profile.getImageUrl();
 			var name = profile.getName();
-			var email = profile.getEmail();
+			email = profile.getEmail();
 
 			
 			$('.loginS').css("display", "block");
@@ -266,6 +305,59 @@
 	
 	
 	</script>
+	
+	
+	<!-- 메세지 ajax -->
+	<script>
+		var findMessage = function() {
+			$.ajax({
+				url : "${ctx}/getmessage.ajax",
+				type : "post",
+				data : {
+					uid : email
+				},
+				success : displayMessage
+			});
+		};
+
+		var displayMessage = function(resultData) {
+			var messageHtml = "";
+			
+			$.each(resultData, function(index, meesage) {
+				messageHtml += '<div style="display: flex;width:100%;">';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.fromMemberId+'</span></div>';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.registDate+'</span></div>';
+				messageHtml += '<div style=" text-align: center; width: 60%; "><span style="text-align: center;">'+meesage.contents+'</span>'+
+								'<a href="#" onclick="dropMessage('+meesage.id+')">'+
+								'<button type="button" class="close" aria-label="Close" style="color: coral;">'+
+								'<span aria-hidden="true">&times;</span>'+
+								'</button>'+
+								'</a></div>';
+				messageHtml += '</div>';
+			});
+			
+			$('#messageContents').empty();
+			$("#messageContents").append(messageHtml);
+		};
+		
+		var dropMessage = function(id) {
+			
+			console.log(id);
+			
+			$.ajax({
+				url : "${ctx}/delmessage.ajax",
+				type : "post",
+				data : {
+					mid : id
+				},
+				success : function(redata){
+					console.log(redata);
+					findMessage();
+				}
+			});
+		};
+	</script>
+	<!-- 메세지 -->
 
 <script
 		src="https://apis.google.com/js/platform.js?onload=renderButton" async
