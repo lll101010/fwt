@@ -285,8 +285,8 @@
 	</div>
 
 	<form action="${ctx }/postList.do" id="postForm">
-						<input type="hidden" name="placeId" value="${place.id }"> 
-						<input type="hidden" value="" id="applyId" name="userId">
+						<input type="hidden" name="postPlaceId" value="${place.id }"> 
+						<input type="hidden" id="postApplyId" name="postUserId">
 	</form> 
 
 
@@ -656,7 +656,8 @@
 	<!-- //Custom-JavaScript-File-Links -->
 
 	<script>
-	var email
+	var email;
+	
 		function onSuccess(googleUser) {
 			var profile = googleUser.getBasicProfile();
 			var imageurl = profile.getImageUrl();
@@ -665,6 +666,9 @@
 			
  			document.getElementById("guideId").value = email;
 			document.getElementById("applyId").value = email;
+			document.getElementById("postApplyId").value = email;
+			
+			console.log(email);
 			
 			$('#profileImg').attr("src", imageurl)
 			$('.loginS').css("display", "block");

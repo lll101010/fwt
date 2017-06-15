@@ -97,6 +97,8 @@ public class PageController {
 	@RequestMapping("myPage.do")
 	public String myPage(String userId, Model model){
 		
+		
+		System.out.println("아이디 내놔라 " + userId);
 		List<TourV2> list = tourService.findTourByMemberId(userId);
 		model.addAttribute("guideList",list);
 		

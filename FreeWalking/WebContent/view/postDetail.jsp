@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	function button_event() {
 		if (confirm("정말 삭제하시겠습니까??") == true) { //확인
-			location.href = '${ctx}/delete.do?postId=${post.id}&placeId=${post.placeId}'
+			location.href = '${ctx}/delete.do?postId=${post.id}&postPlaceId=${post.placeId}&userId=${post.registerId}'
 		} else { //취소
 			return;
 		}
@@ -41,7 +41,7 @@
 					</div>
 
 					<textarea name="contents" placeholder="Contents" required="">${post.contents}</textarea>
-					<button type="button" class="btn btn-default" onclick="location.href='${ctx}/postList.do?placeId=${post.placeId}'">목록</button>
+					<button type="button" class="btn btn-default" onclick="location.href='${ctx}/postList.do?postPlaceId=${post.placeId}'">목록</button>
 					<button type="button" class="btn btn-default" onclick="button_modify();">수정</button>
 					<button type="button" class="btn btn-default" onclick="button_event();">삭제</button>
 				</form>

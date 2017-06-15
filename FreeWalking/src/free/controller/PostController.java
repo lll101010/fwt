@@ -45,10 +45,14 @@ public class PostController {
 	private PostService service;
 	
 	@RequestMapping(value="postList.do", method=RequestMethod.GET)
-	public String listAllPost(String userId, int placeId, Model model) {
-		List<Post> posts = service.findPostByPlaceId(placeId);
-		model.addAttribute("placeId", placeId);
-		model.addAttribute("userId", userId);
+	public String listAllPost(String postUserId, int postPlaceId, Model model) {
+		List<Post> posts = service.findPostByPlaceId(postPlaceId);
+		
+		System.out.println("postUserId : " + postUserId);
+		System.out.println("postPlaceId : " + postPlaceId);
+		
+		model.addAttribute("placeId", postPlaceId);
+		model.addAttribute("userId", postUserId);
 		model.addAttribute("posts", posts);
 		return "postList";
 	}
@@ -110,8 +114,8 @@ public class PostController {
 		
 		service.registerPost(post, files);
 		
-		redirectAttribute.addAttribute("userId", post.getRegisterId());
-		redirectAttribute.addAttribute("placeId", post.getPlaceId());
+		redirectAttribute.addAttribute("postUserId", post.getRegisterId());
+		redirectAttribute.addAttribute("postPlaceId", post.getPlaceId());
 		
 		return "redirect:/postList.do";
 	}
@@ -157,8 +161,11 @@ public class PostController {
 	}
 	
 	@RequestMapping("delete.do")
-	public String deletePost(int postId, int placeId) {
+	public String deletePost(String userId, int postId, int postPlaceId, RedirectAttributes redi) {
 		service.removePost(postId);
-		return "redirect:/postList.do?placeId=" + placeId;
+		redi.addAttribute("postPlaceId", postPlaceId);
+		redi.addAttribute("postUserId", userId);
+		
+		return "redirect:/postList.do";
 	}
 }
