@@ -19,7 +19,7 @@ public class MessageDaoLogic implements MessageDao {
 	private static final String SQL_INSERT_MESSAGE = "INSERT INTO message_free VALUES(message_free_seq.nextVal, ?, ?,?,?)";
 	private static final String SQL_DELETE_MESSAGE = "DELETE FROM message_free WHERE id = ?";
 	private static final String SQL_SELECT_MESSAGE_ID = "SELECT * FROM message_free WHERE id = ?";
-	private static final String SQL_SELECT_MESSAGE_TOMEMBERID = "SELECT * FROM message_free WHERE toMemberId= ?";
+	private static final String SQL_SELECT_MESSAGE_TOMEMBERID = "SELECT * FROM message_free WHERE toMemberId= ? order by id desc";
 	private static final String SQL_SELECT_MESSAGE_FROMMEBERID = "SELECT * FROM message_free WHERE fromMemberId=?";
 
 	private JdbcTemplate jdbcTemplate;
@@ -59,7 +59,7 @@ public class MessageDaoLogic implements MessageDao {
 		Message m = new Message();
 		m.setId(rs.getInt("id"));
 		m.setContents(rs.getString("contents"));
-		m.setRegistDate(rs.getDate("registDate"));
+		m.setRegistDate(rs.getString("registDate"));
 		m.setFromMemberId(rs.getString("fromMemberId"));
 		m.setToMemberId(rs.getString("toMemberId"));
 		return m;

@@ -1176,7 +1176,7 @@ ul.simplefilter {
     border-color: #02b875;
 }
 ::-webkit-input-placeholder {
-	color:#fff !important;
+	color:#337ab7;
 }
 :-moz-placeholder { /* Firefox 18- */
 	color:#fff !important;
@@ -2207,9 +2207,10 @@ div#txt {
 	text-decoration:none;
 	padding-bottom: 2.5em;
 }
-#blurbg:before  {
-	-webkit-filter: blur(5px);
-	-moz-filter: blur(5px);
-	-o-filter: blur(5px);
-	-ms-filter: blur(5px);
-	filter: blur(5px);}
+.reMsgid{
+	color:cornflowerblue; 
+	text-decoration:none;
+}
+.reMsgid:hover{
+    color: #f44336;
+}

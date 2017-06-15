@@ -36,8 +36,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body modal-spa">
-						<!-- <img src="images/bg2.jpg" class="img-responsive" alt="" /> -->
+					<div class="modal-body modal-spa" >
 						<h4 style="text-align: center;">Message Box</h4>
 						<br>
 						<div style="display: inline-flex;width: 100%;color: coral;font-weight: bold;">
@@ -85,6 +84,10 @@
 								
 								</c:choose>
 							</span>
+							
+							<a href="#" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal" onclick="showMsgList(${guide.id})" style="margin-top: 50px; "
+							>Send Message</a>
+							
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
 							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${guide.title }</a></h5>
@@ -106,6 +109,7 @@
 							onclick="showMap()">Location</a>
 							<a href="${ctx }/cancelGuide.do?tourId=${guide.id }&userId=${guide.guideId}" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
 							>Cancel Guide</a>
+							
 						</div>
 						<div class="clearfix"> </div>
 					</div>
@@ -135,7 +139,7 @@
 						</div>
 						<div class="col-md-9 col-xs-9 date-info">
 							<h5><a href="#myModal" data-toggle="modal" style="color: black;">${tour.title }</a></h5>
-							<h5><a href="#myModal" data-toggle="modal">Guide ID : ${tour.guideId }</a></h5>
+							<h5><a href="#" data-toggle="modal" onclick="showMsgGuide('${tour.guideId}')">Guide ID : ${tour.guideId }</a></h5>
 							<p style="margin: 0px; color:cornflowerblue ">Start Date : ${tour.startDate } ~<br>End Date : ${tour.endDate }</p>
 							<p>Address  <br>${tour.place.address }</p>
 							<a href="#myModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
@@ -188,7 +192,7 @@
 		</div>
 	</div>
 	
-	
+	<!-- 리드미 -->
 	<div class="modal bnr-modal fade" id="myModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -206,7 +210,8 @@
 	</div>
 	<!-- //modal-about -->  
 	
-	<!-- modal-about -->
+	
+	<!-- 지도-about -->
 	<div class="modal bnr-modal fade" id="mapModal" tabindex="-1"
 		role="dialog">
 		<div class="modal-dialog" role="document">
@@ -231,6 +236,53 @@
 	</div>
 	<!-- //modal-about -->
 	
+	
+	<!-- 샌드 메세지 -->
+	<div class="modal bnr-modal fade" id="sendMessage" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+				</div> 
+				<div class="modal-body modal-spa" id="userList">
+				<!-- 	<h4>아이디를 선택하세요</h4>
+					<select class="form-control" id="selectId" name="selectId" >
+						<option value=""> all </option>
+						<option value="6">06:00 ~ 08:00</option>
+					</select>
+					<br>
+					<h4>보낼 메시지를 입력하세요</h4>
+					<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Message Input max size 50" maxlength="50">
+					<br>
+					<button type="button" onclick="" class="sbBtn">Send</button>  -->
+				</div> 
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->
+	
+	<!-- ok창 -->
+	<div class="modal bnr-modal fade" id="sendOk" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="background-color: indianred;">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="loginF" class="modal-body modal-spa"
+					style="display: block; text-align: -webkit-center;">
+
+					<span id="resultText" style="color: blanchedalmond;"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //modal-about -->
+
+
 	<script>
 	
 	var email = "";
@@ -307,6 +359,91 @@
 		});
 	}
 	
+	var showMsgList = function(tourid){
+		$.ajax({
+			url : "${ctx}/finduser.ajax",
+			type : "post",
+			data : {
+				tid : tourid
+			},
+			success : displayUserList
+		});
+	}
+	var showMsgGuide = function(guideid) {
+	
+		var userListHtml = "<h4>아이디를 선택하세요</h4>";
+		userListHtml += '<select class="form-control" id="selectId" name="selectId" >';
+		userListHtml += '<option value="'+guideid+'">'+guideid+'</option>';
+		userListHtml += '</select><br>';
+		userListHtml += '<h4>보낼 메시지를 입력하세요</h4>';
+		userListHtml += '<input type="text" class="form-control" placeholder="Message Input max size 50" maxlength="50" id="messageContent">';
+		userListHtml +='<br><button type="button" onclick="MessagePost()" class="sbBtn">Send</button>';
+		$('#userList').empty();
+		$("#userList").append(userListHtml);
+		jQuery('#sendMessage').modal();
+		
+	}
+	
+	var showResend = function(){
+		
+		var resendedId = $('#resendId').text();
+		var userListHtml = "<h4>아이디를 선택하세요</h4>";
+		userListHtml += '<select class="form-control" id="selectId" name="selectId" >';
+		userListHtml += '<option value='+resendedId+'>'+resendedId+'<option>';
+		userListHtml += '</select><br>';
+		userListHtml += '<h4>보낼 메시지를 입력하세요</h4>';
+		userListHtml += '<input type="text" class="form-control" placeholder="Message Input max size 50" maxlength="50" id="messageContent">';
+		userListHtml +='<br><button type="button" onclick="MessagePost()" class="sbBtn">Send</button>';
+		$('#userList').empty();
+		$("#userList").append(userListHtml);
+		jQuery('#sendMessage').modal();
+	}
+	
+	
+	
+	var displayUserList = function(resultData) {
+		var userListHtml = "<h4>아이디를 선택하세요</h4>";
+		userListHtml += '<select class="form-control" id="selectId" name="selectId" >';
+		userListHtml += '<option value=""> 아이디를 선택해주세요 </option>';
+		
+		$.each(resultData, function(index, user) {
+			userListHtml += '<option value="'+user.memberId+'">'+user.memberId+'</option>';
+			
+		});
+		userListHtml += '</select><br>';
+		userListHtml += '<h4>보낼 메시지를 입력하세요</h4>';
+		userListHtml += '<input type="text" class="form-control" placeholder="Message Input max size 50" maxlength="50" id="messageContent">';
+		userListHtml +='<br><button type="button" onclick="MessagePost()" class="sbBtn">Send</button>';
+		$('#userList').empty();
+		$("#userList").append(userListHtml);
+		jQuery('#sendMessage').modal();
+	};
+	
+	var MessagePost = function(){
+		if($("#selectId option:selected").val()==""){
+			$('#resultText').text('아이디를 선택해주세요.');
+			jQuery('#sendOk').modal();
+			return false;
+		}
+		
+		$.ajax({
+			url : "${ctx}/regmessage.ajax",
+			type : "post",
+			data : {
+				uid : $("#selectId option:selected").val(),
+				content : $('#messageContent').val(),
+				fromid : email
+			},
+			success : function(){
+				
+				$('#resultText').text('메세지가 전송되었습니다.');
+				jQuery('#sendOk').modal();
+				jQuery('#sendMessage').modal('hide');
+			}
+		});
+		
+		
+	}
 	
 	</script>
 	
@@ -329,7 +466,7 @@
 			
 			$.each(resultData, function(index, meesage) {
 				messageHtml += '<div style="display: flex;width:100%;">';
-				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.fromMemberId+'</span></div>';
+				messageHtml += '<div style=" text-align: center; width: 20%; "><a href="#" onclick="showResend()"><span id="resendId" class="reMsgid">'+meesage.fromMemberId+'</span></a></div>';
 				messageHtml += '<div style=" text-align: center; width: 20%; "><span>'+meesage.registDate+'</span></div>';
 				messageHtml += '<div style=" text-align: center; width: 60%; "><span style="text-align: center;">'+meesage.contents+'</span>'+
 								'<a href="#" onclick="dropMessage('+meesage.id+')">'+

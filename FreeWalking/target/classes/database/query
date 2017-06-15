@@ -89,7 +89,7 @@ CREATE TABLE post_file_free (
 CREATE TABLE message_free (
   id NUMBER PRIMARY KEY,
   contents VARCHAR(3000),
-  registDate DATE,
+  registDate VARCHAR2(50),
   fromMemberId VARCHAR(30),
   toMemberId VARCHAR(30) 
 );
@@ -133,3 +133,8 @@ INSERT INTO place_free VALUES(place_free_seq.nextVal, 'Hallstatt', 47.5628815, 1
 
 INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 06:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 08:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 10, 'rmsurll1@gmail.com');
 INSERT INTO tour_free VALUES(tour_free_seq.nextVal, TO_DATE('2017-06-09 18:00:00', 'yyyy-MM-dd hh24:mi:ss'), TO_DATE('2017-06-09 20:00:00', 'yyyy-MM-dd hh24:mi:ss'), 'a', '1', 'KOREAN', '0', 1, 'rmsurll1@gmail.com');
+
+
+메세지 데이트->string
+조건-> c: yorizori 폴더 이미지, server context path 설정
+
