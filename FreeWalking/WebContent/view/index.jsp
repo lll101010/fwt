@@ -49,7 +49,7 @@
 				<li><a href="#loginModal" data-toggle="modal"
 					style="content: '\f012';" id="loginNav"><span id="loginSpan">Login</span></a></li>
 				<li><a href="#portfolio" class="scroll"><span>Gallery</span></a></li>
-				<li><a href="#blog" class="scroll"><span>Board</span></a></li>
+				<li><a href="#" onclick="postList()" class="scroll"><span>Board</span></a></li>
 				<li><a href="#messageModal" onclick="findMessage()" data-toggle="modal" class="loginS" style="display: none;"><span>Message</span></a></li>
 				<li><a href="#" onclick="myPage()" class="loginS" style="display: none;"><span>MyTour</span></a></li>
 			</ul>
@@ -283,6 +283,11 @@
 
 		<div class="clearfix"></div>
 	</div>
+
+	<form action="${ctx }/postList.do" id="postForm">
+						<input type="hidden" name="placeId" value="${place.id }"> 
+						<input type="hidden" value="" id="applyId" name="userId">
+	</form> 
 
 
 	<!-- //footer -->
@@ -872,6 +877,11 @@
 		$('#myPageform').submit();
 		
 	}
+	
+	var postList = function() {
+		$('#postForm').submit();
+	}
+	
 	</script>
 	
 	

@@ -6,7 +6,7 @@ import free.domain.Post;
 
 public interface PostDao {
 
-	public boolean createPost(Post post);
+	public int createPost(Post post);
 	
 	public boolean updatePost(Post post);
 	

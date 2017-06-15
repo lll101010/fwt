@@ -1,5 +1,7 @@
 package free.dao.logic;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,6 +10,9 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import free.dao.PostDao;
@@ -24,6 +29,7 @@ public class PostDaoLogic implements PostDao {
 	private static final String SQL_SELECT_POST_PLACEID = "SELECT * FROM post_free WHERE placeId=?";
 
 	private JdbcTemplate jdbcTemplate;
+	private KeyHolder keyHolder = new GeneratedKeyHolder();
 
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
@@ -31,9 +37,24 @@ public class PostDaoLogic implements PostDao {
 	}
 
 	@Override
-	public boolean createPost(Post post) {
-		return jdbcTemplate.update(SQL_INSERT_POST, new Object[] { post.getTitle(), post.getContents(),
-				post.getRegistDate(), post.getPlaceId(), post.getRegisterId() }) > 0;
+	public int createPost(Post post) {
+		jdbcTemplate.update(
+				new PreparedStatementCreator() {
+					public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+						PreparedStatement ps = connection.prepareStatement(SQL_INSERT_POST, new String[] {"id"});
+						
+						ps.setString(1, post.getTitle());
+						ps.setString(2, post.getContents());
+						ps.setDate(3, post.getRegistDate());
+						ps.setInt(4, post.getPlaceId());
+						ps.setString(5, post.getRegisterId());
+						
+						return ps;
+					}
+				},	
+				keyHolder);
+			
+			return Integer.parseInt(String.valueOf(keyHolder.getKey()+""));
 	}
 
 	@Override

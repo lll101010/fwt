@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import free.dao.FileDao;
 import free.dao.PostDao;
+import free.domain.File;
 import free.domain.Post;
 import free.service.PostService;
 
@@ -13,10 +15,26 @@ import free.service.PostService;
 public class PostServiceLogic implements PostService {
 	@Autowired
 	private PostDao dao;
+	
+	@Autowired
+	private FileDao fileDao;
 
 	@Override
-	public boolean registerPost(Post post) {
-		return dao.createPost(post);
+	public boolean registerPost(Post post, List<File> files) {
+		
+		boolean flag = false;
+		int postId = dao.createPost(post);
+		
+		if(postId > 0){
+			
+			System.out.println(postId);
+			
+			for(File file : files){
+			flag = fileDao.createPostFile(file, postId);
+			}
+		}
+		
+		return flag;
 	}
 
 	@Override
@@ -26,6 +44,13 @@ public class PostServiceLogic implements PostService {
 
 	@Override
 	public boolean removePost(int postId) {
+		
+		List<File> files = findFileByPostId(postId);
+		
+		for(File file : files){
+			fileDao.deletePostFile(file.getId());
+		}
+		
 		return dao.deletePost(postId);
 	}
 
@@ -48,6 +73,11 @@ public class PostServiceLogic implements PostService {
 	@Override
 	public Post findPostByPostId(int postId) {
 		return dao.searchPostByPostId(postId);
+	}
+
+	@Override
+	public List<File> findFileByPostId(int postId) {
+		return fileDao.searchFileByPostId(postId);
 	}
 
 }
