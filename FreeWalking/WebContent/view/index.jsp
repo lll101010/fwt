@@ -5,7 +5,7 @@
 <html>
 <%@ include file="./header.jspf"%>
 <meta name="google-signin-client_id"
-	content="1006094630241-2u32bu1k1komv4nepbmbbvrajogpvvj2.apps.googleusercontent.com"></meta>
+	content="966301113136-lj7fqtncelot7lp9kbbm46oqh0rmkv1c.apps.googleusercontent.com"></meta>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script type="application/x-javascript">
 	
@@ -310,8 +310,7 @@
 					<div
 						class="map">
 						<iframe
-							src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${place.address }" allowfullscreen">
+							src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9kzJsSlGi-0j03zs2TBjIZybWe4Y-d8U&q=${place.address }" allowfullscreen">
 						</iframe>
 					</div>
 

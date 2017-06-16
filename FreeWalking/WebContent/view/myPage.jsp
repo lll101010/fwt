@@ -4,7 +4,7 @@
 <html>
 <%@ include file="./header.jspf" %>
 <meta name="google-signin-client_id"
-	content="1006094630241-2u32bu1k1komv4nepbmbbvrajogpvvj2.apps.googleusercontent.com"></meta>
+	content="966301113136-lj7fqtncelot7lp9kbbm46oqh0rmkv1c.apps.googleusercontent.com"></meta>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<!-- 구글oauth관련 -->
 <body>
@@ -104,8 +104,7 @@
 							<a href="#mapModal" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
 							data-pcontents="${guide.place.contents }"
 							data-paddress="${guide.place.address }"
-							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyDx6PhbZtEg6VsBhod8enpuRaFK4LQY5ZU
-   								 &q=${guide.place.address }"
+							data-psrc="https://www.google.com/maps/embed/v1/place?key=AIzaSyA9kzJsSlGi-0j03zs2TBjIZybWe4Y-d8U&q=${guide.place.address }"
 							onclick="showMap()">Location</a>
 							<a href="${ctx }/cancelGuide.do?tourId=${guide.id }&userId=${guide.guideId}" class="wthree-btn w3btn2 w3btn2a" data-toggle="modal"
 							>Cancel Guide</a>
