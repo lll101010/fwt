@@ -32,7 +32,7 @@ CREATE TABLE tour_free(
   language VARCHAR2(100),
   status VARCHAR2(10),
   placeId NUMBER,
-  guideId VARCHAR2(20)
+  guideId VARCHAR2(50)
 );
 
 
@@ -108,7 +108,16 @@ CREATE TABLE post_report_free(
   memberId VARCHAR(30)
 );
 
+CREATE TABLE tourMember_location_free(
+  id NUMBER PRIMARY KEY,
+  memberid VARCHAR(50),
+  tourid VARCHAR2(10)
+  latitude NUMBER(10,7),
+  longitude NUMBER(10,7)
+);
+
 create sequence tour_free_seq start with 1 increment by 1;
+create sequence location_free_seq start with 1 increment by 1;
 create sequence place_free_seq start with 1 increment by 1;
 create sequence post_free_seq start with 1 increment by 1;
 create sequence comment_free_seq start with 1 increment by 1;

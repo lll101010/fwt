@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import free.dao.FileDao;
+import free.dao.MemberLocationDao;
 import free.dao.MemberTourDao;
 import free.dao.PlaceDao;
 import free.dao.TourDao;
 import free.domain.File;
+import free.domain.MemberLocation;
 import free.domain.Place;
 import free.domain.Tour;
 import free.domain.TourV2;
@@ -27,10 +29,19 @@ public class TourServiceLogic implements TourService {
 	private PlaceDao pdao;
 	@Autowired
 	private MemberTourDao mTdao;
+	@Autowired
+	private MemberLocationDao mldao;
 	
 	@Override
 	public boolean registerTour(Tour tour) {
-		return fdao.createTourFile(tour.getFile(), dao.createTour(tour));
+		int tourid = dao.createTour(tour);
+		MemberLocation ml = new MemberLocation();
+		ml.setMemberid(tour.getGuideId());
+		ml.setTourid(tourid);
+		ml.setLatitude("0");
+		ml.setLongitude("0");
+		mldao.createMemberLocation(ml);
+		return fdao.createTourFile(tour.getFile(), tourid);
 	}
  
 	@Override

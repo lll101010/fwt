@@ -33,7 +33,8 @@ public class TourDaoLogic implements TourDao {
 		 	   									 + " FROM member_tour_free"
 		 	   									 + " GROUP BY tourId) dual"
 		 	   									 + " ON t.id = dual.tourId)"
-		 	   									 + "WHERE guideid=?"; 
+		 	   									 + "WHERE guideid=?"
+		 	   									 + "ORDER BY startdate"; 
 	private static final String SQL_SELECT_TOUR_TOURID = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE id=?";
 	private static final String SQL_SELECT_TOUR_DATE_PLACE = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free WHERE startDate > ? AND startDate < ? + 1 AND placeId=?";
 	private static final String SQL_SELECT_ALL_TOUR = "SELECT id, TO_CHAR(startdate, 'yyyy-MM-dd hh24:mi:ss') startdate, TO_CHAR(enddate, 'yyyy-MM-dd hh24:mi:ss') enddate, contents, maxperson, language, status, placeId, guideId, title  FROM tour_free";
